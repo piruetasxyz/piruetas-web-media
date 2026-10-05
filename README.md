@@ -18,11 +18,12 @@ Dentro de cada carpeta de proyecto, las imágenes se organizan en subcarpetas:
 2026-biblioteca-cuir-web/
   jpg/    fotos originales (portada-foto-actividad.jpg, ...)
   svg/    dibujos originales, si hay (esquemáticos, placas, ...)
+  mp4/    videos, si hay (renders 3D, ...)
   webp/   previews en formato webp, generadas automáticamente a partir de jpg/
   redes/  previews de 1200×628 para redes sociales, generadas automáticamente a partir de jpg/, png/ y svg/
 ```
 
-Solo `jpg/`, `png/` y `svg/` se suben a mano; `webp/` y `redes/` no se editan nunca a mano.
+Solo `jpg/`, `png/`, `svg/` y `mp4/` se suben a mano; `webp/` y `redes/` no se editan nunca a mano.
 
 Los archivos nuevos dentro de `jpg/` se nombran de forma descriptiva, en minúsculas y con guiones, según lo que muestra la foto (ej: `portada-foto-actividad.jpg`, `inicio-objetos-coleccion.jpg`). Cada `.webp` en `webp/` tiene el mismo nombre que su `.jpg`.
 
