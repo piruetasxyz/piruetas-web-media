@@ -1,13 +1,15 @@
-name: Generar previews webp
+name: Generar previews jpg y webp
 
 on:
   workflow_dispatch: {}
   push:
     branches: [main]
     paths:
+      - "**/svg/*.svg"
       - "**/jpg/*.jpg"
       - "**/jpg/*.jpeg"
       - "scripts/generar-webp.sh"
+      - "scripts/generar-jpg-desde-svg.sh"
 
 permissions:
   contents: write
@@ -20,8 +22,13 @@ jobs:
         with:
           ref: main
 
-      - name: Instalar cwebp
-        run: sudo apt-get update && sudo apt-get install -y webp
+      - name: Instalar cwebp, rsvg-convert e ImageMagick
+        run: sudo apt-get update && sudo apt-get install -y webp librsvg2-bin imagemagick
+
+      # va antes que los webp, para que los jpg generados desde svg
+      # tambien tengan su webp en la misma corrida
+      - name: Generar jpg desde svg
+        run: ./scripts/generar-jpg-desde-svg.sh
 
       - name: Generar webp desde jpg
         run: ./scripts/generar-webp.sh
@@ -34,6 +41,6 @@ jobs:
           if git diff --cached --quiet; then
             echo "Sin cambios que commitear."
           else
-            git commit -m "Generar previews webp automáticamente"
+            git commit -m "Generar previews jpg y webp automáticamente"
             git push
           fi
