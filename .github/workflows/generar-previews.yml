@@ -1,15 +1,16 @@
-name: Generar previews jpg y webp
+name: Generar previews webp y redes sociales
 
 on:
   workflow_dispatch: {}
   push:
     branches: [main]
     paths:
-      - "**/svg/*.svg"
       - "**/jpg/*.jpg"
       - "**/jpg/*.jpeg"
+      - "**/png/*.png"
+      - "**/svg/*.svg"
       - "scripts/generar-webp.sh"
-      - "scripts/generar-jpg-desde-svg.sh"
+      - "scripts/generar-redes-sociales.sh"
 
 permissions:
   contents: write
@@ -25,15 +26,13 @@ jobs:
       - name: Instalar cwebp, rsvg-convert e ImageMagick
         run: sudo apt-get update && sudo apt-get install -y webp librsvg2-bin imagemagick
 
-      # va antes que los webp, para que los jpg generados desde svg
-      # tambien tengan su webp en la misma corrida
-      - name: Generar jpg desde svg
-        run: ./scripts/generar-jpg-desde-svg.sh
-
       - name: Generar webp desde jpg
         run: ./scripts/generar-webp.sh
 
-      - name: Commitear webp generados
+      - name: Generar previews de redes sociales (redes/*.jpg) desde jpg, png y svg
+        run: ./scripts/generar-redes-sociales.sh
+
+      - name: Commitear previews generados
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -41,6 +40,6 @@ jobs:
           if git diff --cached --quiet; then
             echo "Sin cambios que commitear."
           else
-            git commit -m "Generar previews jpg y webp automáticamente"
+            git commit -m "Generar previews webp y redes sociales automáticamente"
             git push
           fi
