@@ -15,12 +15,14 @@ Por ejemplo: `2026-claudia-gonzalez-godoy-placas`.
 Dentro de cada carpeta de proyecto, las fotos se organizan en dos subcarpetas:
 
 ```text
-2026-claudia-gonzalez-godoy-placas/
-  jpg/    fotos originales (00.jpg, 01.jpg, ...)
+2026-biblioteca-cuir-web/
+  jpg/    fotos originales (portada-foto-actividad.jpg, ...)
   webp/   previews en formato webp, generadas automáticamente a partir de jpg/
 ```
 
-Los archivos dentro de `jpg/` y `webp/` se nombran con números de dos dígitos empezando en `00`, en el mismo orden que las fotos originales.
+Los archivos nuevos dentro de `jpg/` se nombran de forma descriptiva, en minúsculas y con guiones, según lo que muestra la foto (ej: `portada-foto-actividad.jpg`, `inicio-objetos-coleccion.jpg`). Cada `.webp` en `webp/` tiene el mismo nombre que su `.jpg`.
+
+Algunas carpetas antiguas, como `2026-claudia-gonzalez-godoy-placas`, usan números de dos dígitos (`00.jpg`, `01.jpg`, ...).
 
 ## Generación de previews webp
 
