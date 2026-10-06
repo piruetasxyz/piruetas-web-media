@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- generado por scripts/generar-arboles.js desde github.com/piruetasxyz/Perilla, no editar a mano -->
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+<title>piruetasxyz/Perilla: estructura de archivos</title>
+<rect width="1200" height="800" fill="white" />
+<rect x="24" y="24" width="369.72" height="752" fill="white" stroke="black" stroke-width="1.5" />
+<rect x="30" y="30" width="357.72" height="352.89" fill="greenyellow" stroke="black" stroke-width="1.5"><title>pico/pico_sdk_import.cmake</title></rect>
+<rect x="30" y="382.89" width="228.4" height="174.75" fill="pink" stroke="black" stroke-width="1.5"><title>pico/CMakeLists.txt</title></rect>
+<rect x="258.4" y="382.89" width="129.32" height="174.75" fill="white" stroke="black" stroke-width="1.5" />
+<rect x="264.4" y="388.89" width="117.32" height="162.75" fill="skyblue" stroke="black" stroke-width="1.5"><title>pico/ej01_brilloLed/main.cpp</title></rect>
+<rect x="30" y="557.63" width="106.41" height="212.37" fill="white" stroke="black" stroke-width="1.5" />
+<rect x="36" y="563.63" width="94.41" height="200.37" fill="skyblue" stroke="black" stroke-width="1.5"><title>pico/ej02_umbral/main.cpp</title></rect>
+<rect x="136.41" y="557.63" width="189.13" height="110.28" fill="white" stroke="black" stroke-width="1.5" />
+<rect x="142.41" y="563.63" width="177.13" height="98.28" fill="skyblue" stroke="black" stroke-width="1.5"><title>pico/ej03_dosPerillas/main.cpp</title></rect>
+<rect x="136.41" y="667.92" width="189.13" height="102.08" fill="white" stroke="black" stroke-width="1.5" />
+<rect x="142.41" y="673.92" width="177.13" height="90.08" fill="skyblue" stroke="black" stroke-width="1.5"><title>pico/ej00_leerPerilla/main.cpp</title></rect>
+<rect x="325.54" y="557.63" width="62.19" height="212.37" fill="orange" stroke="black" stroke-width="1.5"><title>pico/PicoHardware.cpp</title></rect>
+<rect x="393.72" y="24" width="360.59" height="418.31" fill="white" stroke="black" stroke-width="1.5" />
+<rect x="399.72" y="30" width="348.59" height="215.4" fill="orange" stroke="black" stroke-width="1.5"><title>src/Perilla.h</title></rect>
+<rect x="399.72" y="245.4" width="167.85" height="190.91" fill="orange" stroke="black" stroke-width="1.5"><title>src/Perilla.cpp</title></rect>
+<rect x="567.57" y="245.4" width="180.74" height="154.42" fill="orange" stroke="black" stroke-width="1.5"><title>src/Hardware.h</title></rect>
+<rect x="567.57" y="399.82" width="180.74" height="36.49" fill="white" stroke="black" stroke-width="1.5" />
+<rect x="573.57" y="405.82" width="168.74" height="24.49" fill="orange" stroke="black" stroke-width="1.5"><title>src/arduino/ArduinoHardware.cpp</title></rect>
+<rect x="393.72" y="442.31" width="360.59" height="333.69" fill="pink" stroke="black" stroke-width="1.5"><title>README.md</title></rect>
+<rect x="754.31" y="24" width="421.69" height="231.3" fill="white" stroke="black" stroke-width="1.5" />
+<rect x="760.31" y="30" width="409.69" height="219.3" fill="white" stroke="black" stroke-width="1.5" />
+<rect x="766.31" y="36" width="218.42" height="207.3" fill="greenyellow" stroke="black" stroke-width="1.5"><title>.github/workflows/doxygen.yml</title></rect>
+<rect x="984.73" y="36" width="179.27" height="96.64" fill="greenyellow" stroke="black" stroke-width="1.5"><title>.github/workflows/pico-compile.yml</title></rect>
+<rect x="984.73" y="132.64" width="136.89" height="110.65" fill="greenyellow" stroke="black" stroke-width="1.5"><title>.github/workflows/arduino-compile-sketches.yml</title></rect>
+<rect x="1121.62" y="132.64" width="42.38" height="110.65" fill="greenyellow" stroke="black" stroke-width="1.5"><title>.github/workflows/arduino-lint.yml</title></rect>
+<rect x="754.31" y="255.3" width="222.34" height="396.49" fill="white" stroke="black" stroke-width="1.5" />
+<rect x="760.31" y="261.3" width="210.34" height="321.79" fill="pink" stroke="black" stroke-width="1.5"><title>docs/principal.dox</title></rect>
+<rect x="760.31" y="583.08" width="210.34" height="62.71" fill="pink" stroke="black" stroke-width="1.5"><title>docs/index.html</title></rect>
+<rect x="976.65" y="255.3" width="199.35" height="396.49" fill="white" stroke="black" stroke-width="1.5" />
+<rect x="982.65" y="261.3" width="187.35" height="105.07" fill="white" stroke="black" stroke-width="1.5" />
+<rect x="988.65" y="267.3" width="175.35" height="93.07" fill="skyblue" stroke="black" stroke-width="1.5"><title>examples/ej03_dosPerillas/ej03_dosPerillas.ino</title></rect>
+<rect x="982.65" y="366.36" width="187.35" height="97.35" fill="white" stroke="black" stroke-width="1.5" />
+<rect x="988.65" y="372.36" width="175.35" height="85.35" fill="skyblue" stroke="black" stroke-width="1.5"><title>examples/ej01_brilloLed/ej01_brilloLed.ino</title></rect>
+<rect x="982.65" y="463.72" width="99.74" height="182.07" fill="white" stroke="black" stroke-width="1.5" />
+<rect x="988.65" y="469.72" width="87.74" height="170.07" fill="skyblue" stroke="black" stroke-width="1.5"><title>examples/ej00_leerPerilla/ej00_leerPerilla.ino</title></rect>
+<rect x="1082.39" y="463.72" width="87.61" height="182.07" fill="white" stroke="black" stroke-width="1.5" />
+<rect x="1088.39" y="469.72" width="75.61" height="170.07" fill="skyblue" stroke="black" stroke-width="1.5"><title>examples/ej02_umbral/ej02_umbral.ino</title></rect>
+<rect x="754.31" y="651.79" width="188.78" height="124.21" fill="pink" stroke="black" stroke-width="1.5"><title>LICENSE</title></rect>
+<rect x="943.09" y="651.79" width="109.01" height="124.21" fill="greenyellow" stroke="black" stroke-width="1.5"><title>Doxyfile</title></rect>
+<rect x="1052.1" y="651.79" width="123.9" height="63.79" fill="greenyellow" stroke="black" stroke-width="1.5"><title>library.properties</title></rect>
+<rect x="1052.1" y="715.58" width="111.88" height="60.42" fill="pink" stroke="black" stroke-width="1.5"><title>keywords.txt</title></rect>
+<rect x="1163.97" y="715.58" width="12.03" height="60.42" fill="greenyellow" stroke="black" stroke-width="1.5"><title>.gitignore</title></rect>
+</svg>

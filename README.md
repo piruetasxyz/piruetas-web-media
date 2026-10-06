@@ -18,29 +18,33 @@ Dentro de cada carpeta de proyecto, las imágenes se organizan en subcarpetas:
 2026-biblioteca-cuir-web/
   jpg/    fotos originales (portada-foto-actividad.jpg, ...)
   svg/    dibujos originales, si hay (esquemáticos, placas, ...)
-  diagrama/  fuentes .yaml de diagramas de bibliotecas de software, si hay
+  arbol/  .yaml con el repositorio de GitHub de un proyecto de software, si hay
   mp4/    videos, si hay (renders 3D, ...)
   webp/   previews en formato webp, generadas automáticamente a partir de jpg/
   redes/  previews de 1200×628 para redes sociales, generadas automáticamente a partir de jpg/, png/ y svg/
 ```
 
-Solo `jpg/`, `png/`, `svg/`, `mp4/` y `diagrama/` se suben a mano; `webp/` y `redes/` no se editan nunca a mano, y tampoco los `svg/` que salen de un `diagrama/`.
+Solo `jpg/`, `png/`, `svg/`, `mp4/` y `arbol/` se suben a mano; `webp/` y `redes/` no se editan nunca a mano, y tampoco los `svg/` que salen de un `arbol/`.
 
 Los archivos nuevos dentro de `jpg/` se nombran de forma descriptiva, en minúsculas y con guiones, según lo que muestra la foto (ej: `portada-foto-actividad.jpg`, `inicio-objetos-coleccion.jpg`). Cada `.webp` en `webp/` tiene el mismo nombre que su `.jpg`.
 
 Algunas carpetas antiguas, como `2026-claudia-gonzalez-godoy-placas`, usan números de dos dígitos (`00.jpg`, `01.jpg`, ...).
 
-## Generación de diagramas de software
+## Generación de árboles de software
 
-Los proyectos de software (como las bibliotecas `2025-piruetas-boton` y `2025-piruetas-perilla`) no tienen esquemáticos de KiCad, así que su imagen es un diagrama de flujo de señal dibujado con código: cada `diagrama/<nombre>.yaml` describe la entrada física (botón, potenciómetro), los bloques (métodos de la biblioteca) y la salida, y [`scripts/generar-diagramas.js`](scripts/generar-diagramas.js) lo dibuja en `svg/<nombre>.svg`, imitando el estilo de los esquemáticos de KiCad (hoja, marco, colores y cuadro de título) y con el texto en Necto Mono convertido a trazados.
+Los proyectos de software (como las bibliotecas `2025-piruetas-boton` y `2025-piruetas-perilla`) no tienen fotos ni esquemáticos, así que su imagen sale del código mismo: un treemap de la estructura de archivos de su repositorio. Cada archivo es un rectángulo con área proporcional a su tamaño, cada carpeta un marco que agrupa a sus archivos, y el color dice el tipo de archivo, con los colores del sitio:
 
-Esto corre en el mismo GitHub Action [`generar-previews.yml`](.github/workflows/generar-previews.yml), antes de los previews, así que cada diagrama también recibe su `redes/<nombre>.jpg`.
+- naranjo: código (`.h`, `.cpp`, ...)
+- celeste: ejemplos (`examples/`, `pico/ej*/`)
+- rosado: texto (`.md`, `LICENSE`, documentación)
+- verde limón: configuración (workflows, CMake, `library.properties`, ...)
 
-Para correrlo a mano desde la raíz del repositorio:
+Cada `arbol/<nombre>.yaml` tiene una sola línea, `repositorio: 'piruetasxyz/Boton'`, y [`scripts/generar-arboles.js`](scripts/generar-arboles.js) dibuja `svg/<nombre>.svg` pidiendo el árbol del repositorio a la API de GitHub. No tiene dependencias: solo Node 20.
+
+Esto corre en el mismo GitHub Action [`generar-previews.yml`](.github/workflows/generar-previews.yml), antes de los previews, así que cada árbol también recibe su `redes/<nombre>.jpg`. Como el dibujo cambia cuando cambia el repositorio, para actualizarlo se puede correr el workflow a mano (workflow_dispatch) o desde la raíz del repositorio:
 
 ```sh
-npm install
-node scripts/generar-diagramas.js
+node scripts/generar-arboles.js
 ```
 
 ## Generación de previews webp
