@@ -1,0 +1,6 @@
+# scripts/generar-graficos.js corre la lógica de Boton (src/Boton.cpp)
+# sobre un botón simulado con rebotes y dibuja ../svg/boton-grafico.svg
+tipo: 'antirrebote'
+titulo: 'piruetasxyz/Boton'
+# mismo valor que tiempoEntreRebotes en src/Boton.cpp
+tiempoEntreRebotes: 50

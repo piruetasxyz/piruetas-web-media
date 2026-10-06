@@ -3,8 +3,13 @@
    treemap de la estructura de archivos de su repositorio de GitHub.
    Cada archivo es un rectángulo con área proporcional a su tamaño en
    bytes, cada carpeta un marco que agrupa a sus archivos, y el color
-   dice qué tipo de archivo es. No lleva texto: es un retrato del repo,
-   que cambia a medida que el código crece.
+   dice qué tipo de archivo es (con una leyenda arriba). Los archivos y
+   carpetas llevan su nombre cuando cabe. Es un retrato del repo, que
+   cambia a medida que el código crece.
+
+   El texto va como <text> con Necto Mono y monospace de respaldo: en
+   un <img> el navegador no carga la fuente web, así que ahí se ve en
+   la monospace del sistema.
 
    Por cada <proyecto>/arbol/<nombre>.yaml dibuja <proyecto>/svg/<nombre>.svg.
    El .yaml tiene una sola línea:
@@ -24,8 +29,13 @@ const RAIZ = path.join(__dirname, '..');
 const ANCHO = 1200;
 const ALTO = 800;
 const MARGEN = 24;
+const ALTO_CABECERA = 64;
 const RELLENO_CARPETA = 6;
+const RELLENO_NOMBRE_CARPETA = 22;
 const LINEA = 1.5;
+const FUENTE = "'Necto Mono', ui-monospace, Menlo, monospace";
+// ancho de un caracter de la monospace, en proporción al tamaño
+const ANCHO_CARACTER = 0.62;
 
 // los colores del sitio (css/style.css de piruetasxyz.github.io)
 const COLORES = {
@@ -34,11 +44,18 @@ const COLORES = {
   texto: 'pink',
   configuracion: 'greenyellow',
 };
+const LEYENDA = [
+  ['codigo', 'código'],
+  ['ejemplo', 'ejemplos'],
+  ['texto', 'texto'],
+  ['configuracion', 'configuración'],
+];
 
 function tipoDeArchivo(ruta) {
   const nombre = path.basename(ruta);
   if (ruta.startsWith('examples/') || /^pico\/ej[^/]+\//.test(ruta)) return 'ejemplo';
   if (/\.(h|hpp|c|cpp|ino)$/.test(nombre)) return 'codigo';
+  if (nombre === 'CMakeLists.txt') return 'configuracion';
   if (/\.(md|dox|txt|html)$/.test(nombre) || nombre === 'LICENSE') return 'texto';
   return 'configuracion';
 }
@@ -136,38 +153,81 @@ function repartir(hijos, x, y, ancho, alto) {
 
 const n = (v) => Number(v.toFixed(2));
 
+const escapar = (t) => t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+/* Nombre dentro de una caja, arriba a la izquierda, con el tamaño más
+   grande (de 15 a 9) que quepa; si no cabe ni chico, no va. */
+function etiqueta(nombre, x, y, ancho, alto) {
+  for (const tamano of [15, 12, 9]) {
+    if (nombre.length * tamano * ANCHO_CARACTER <= ancho - 8 && tamano + 8 <= alto) {
+      return `<text x="${n(x + 4)}" y="${n(y + 4 + tamano * 0.8)}" font-size="${tamano}">${escapar(nombre)}</text>`;
+    }
+  }
+  return '';
+}
+
 function dibujarNodo(nodo, x, y, ancho, alto, partes) {
   if (!nodo.hijos) {
     partes.push(
-      `<rect x="${n(x)}" y="${n(y)}" width="${n(ancho)}" height="${n(alto)}" fill="${COLORES[nodo.tipo]}" stroke="black" stroke-width="${LINEA}"><title>${nodo.ruta}</title></rect>`,
+      `<rect x="${n(x)}" y="${n(y)}" width="${n(ancho)}" height="${n(alto)}" fill="${COLORES[nodo.tipo]}" stroke="black" stroke-width="${LINEA}"><title>${escapar(nodo.ruta)}</title></rect>`,
     );
+    partes.push(etiqueta(nodo.nombre, x, y, ancho, alto));
     return;
   }
-  // las carpetas (menos la raíz) dejan un marco alrededor de su contenido
+  // las carpetas (menos la raíz) dejan un marco alrededor de su
+  // contenido, más alto arriba para el nombre cuando hay espacio
   let r = 0;
+  let rArriba = 0;
   if (nodo.nombre) {
     partes.push(
       `<rect x="${n(x)}" y="${n(y)}" width="${n(ancho)}" height="${n(alto)}" fill="white" stroke="black" stroke-width="${LINEA}" />`,
     );
     r = Math.min(RELLENO_CARPETA, ancho / 4, alto / 4);
+    rArriba = r;
+    const nombreCarpeta = `${nodo.nombre}/`;
+    if (alto > 80 && nombreCarpeta.length * 12 * ANCHO_CARACTER <= ancho - 8) {
+      rArriba = RELLENO_NOMBRE_CARPETA;
+      partes.push(`<text x="${n(x + 4)}" y="${n(y + 15)}" font-size="12">${escapar(nombreCarpeta)}</text>`);
+    }
   }
   // orden fijo (más grande primero, después por nombre) para que el
   // dibujo solo cambie cuando cambia el repositorio
   const hijos = [...nodo.hijos.values()].sort((a, b) => b.tamano - a.tamano || a.nombre.localeCompare(b.nombre));
-  repartir(hijos, x + r, y + r, ancho - 2 * r, alto - 2 * r).forEach((celda) =>
+  repartir(hijos, x + r, y + rArriba, ancho - 2 * r, alto - r - rArriba).forEach((celda) =>
     dibujarNodo(celda.nodo, celda.x, celda.y, celda.ancho, celda.alto, partes),
   );
 }
 
 function dibujarArbol(repositorio, raiz) {
   const partes = [];
-  dibujarNodo(raiz, MARGEN, MARGEN, ANCHO - 2 * MARGEN, ALTO - 2 * MARGEN, partes);
+  dibujarNodo(raiz, MARGEN, MARGEN + ALTO_CABECERA, ANCHO - 2 * MARGEN, ALTO - 2 * MARGEN - ALTO_CABECERA, partes);
+
+  // cabecera: nombre del repositorio a la izquierda, leyenda a la derecha
+  const cabecera = [
+    `<text x="${MARGEN}" y="${MARGEN + 24}" font-size="26">${escapar(repositorio)}</text>`,
+    `<text x="${MARGEN}" y="${MARGEN + 46}" font-size="14">estructura de archivos: el área de cada caja es el tamaño del archivo</text>`,
+  ];
+  let xLeyenda = ANCHO - MARGEN;
+  [...LEYENDA].reverse().forEach(([tipo, nombre]) => {
+    xLeyenda -= nombre.length * 14 * ANCHO_CARACTER;
+    cabecera.push(`<text x="${n(xLeyenda)}" y="${MARGEN + 24}" font-size="14">${nombre}</text>`);
+    xLeyenda -= 24;
+    cabecera.push(
+      `<rect x="${n(xLeyenda)}" y="${MARGEN + 12}" width="16" height="16" fill="${COLORES[tipo]}" stroke="black" stroke-width="${LINEA}" />`,
+    );
+    xLeyenda -= 20;
+  });
   return `<?xml version="1.0" encoding="UTF-8"?>
 <!-- generado por scripts/generar-arboles.js desde github.com/${repositorio}, no editar a mano -->
 <svg xmlns="http://www.w3.org/2000/svg" width="${ANCHO}" height="${ALTO}" viewBox="0 0 ${ANCHO} ${ALTO}">
 <title>${repositorio}: estructura de archivos</title>
 <rect width="${ANCHO}" height="${ALTO}" fill="white" />
-${partes.join('\n')}
+<g font-family="${FUENTE}" fill="black">
+${cabecera.join('\n')}
+</g>
+<g font-family="${FUENTE}">
+${partes.filter(Boolean).join('\n')}
+</g>
 </svg>
 `;
 }

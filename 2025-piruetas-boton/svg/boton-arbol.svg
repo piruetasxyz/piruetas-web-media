@@ -3,50 +3,92 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
 <title>piruetasxyz/Boton: estructura de archivos</title>
 <rect width="1200" height="800" fill="white" />
-<rect x="24" y="24" width="381.32" height="752" fill="white" stroke="black" stroke-width="1.5" />
-<rect x="30" y="30" width="369.32" height="322.94" fill="greenyellow" stroke="black" stroke-width="1.5"><title>pico/pico_sdk_import.cmake</title></rect>
-<rect x="30" y="352.94" width="219.71" height="163.88" fill="pink" stroke="black" stroke-width="1.5"><title>pico/CMakeLists.txt</title></rect>
-<rect x="249.71" y="352.94" width="149.61" height="163.88" fill="white" stroke="black" stroke-width="1.5" />
-<rect x="255.71" y="358.94" width="137.61" height="151.88" fill="skyblue" stroke="black" stroke-width="1.5"><title>pico/ej04_dosBotones/main.cpp</title></rect>
-<rect x="30" y="516.83" width="189.39" height="126.85" fill="white" stroke="black" stroke-width="1.5" />
-<rect x="36" y="522.83" width="177.39" height="114.85" fill="skyblue" stroke="black" stroke-width="1.5"><title>pico/ej00_leerBoton/main.cpp</title></rect>
-<rect x="30" y="643.67" width="189.39" height="126.33" fill="white" stroke="black" stroke-width="1.5" />
-<rect x="36" y="649.67" width="177.39" height="114.33" fill="skyblue" stroke="black" stroke-width="1.5"><title>pico/ej02_alternarLed/main.cpp</title></rect>
-<rect x="219.39" y="516.83" width="179.93" height="119.54" fill="white" stroke="black" stroke-width="1.5" />
-<rect x="225.39" y="522.83" width="167.93" height="107.54" fill="skyblue" stroke="black" stroke-width="1.5"><title>pico/ej03_contarPulsaciones/main.cpp</title></rect>
-<rect x="219.39" y="636.37" width="117.83" height="133.63" fill="white" stroke="black" stroke-width="1.5" />
-<rect x="225.39" y="642.37" width="105.83" height="121.63" fill="skyblue" stroke="black" stroke-width="1.5"><title>pico/ej01_encenderLed/main.cpp</title></rect>
-<rect x="337.22" y="636.37" width="62.1" height="133.63" fill="orange" stroke="black" stroke-width="1.5"><title>pico/PicoHardware.cpp</title></rect>
-<rect x="405.32" y="24" width="324.81" height="378.82" fill="white" stroke="black" stroke-width="1.5" />
-<rect x="411.32" y="30" width="184.13" height="249.54" fill="orange" stroke="black" stroke-width="1.5"><title>src/Boton.h</title></rect>
-<rect x="595.45" y="30" width="128.68" height="249.54" fill="orange" stroke="black" stroke-width="1.5"><title>src/Hardware.h</title></rect>
-<rect x="411.32" y="279.54" width="258.44" height="117.27" fill="orange" stroke="black" stroke-width="1.5"><title>src/Boton.cpp</title></rect>
-<rect x="669.76" y="279.54" width="54.37" height="117.27" fill="white" stroke="black" stroke-width="1.5" />
-<rect x="675.76" y="285.54" width="42.37" height="105.27" fill="orange" stroke="black" stroke-width="1.5"><title>src/arduino/ArduinoHardware.cpp</title></rect>
-<rect x="405.32" y="402.82" width="324.81" height="373.18" fill="pink" stroke="black" stroke-width="1.5"><title>README.md</title></rect>
-<rect x="730.13" y="24" width="445.87" height="236.44" fill="white" stroke="black" stroke-width="1.5" />
-<rect x="736.13" y="30" width="433.87" height="224.44" fill="white" stroke="black" stroke-width="1.5" />
-<rect x="742.13" y="36" width="202.33" height="212.44" fill="greenyellow" stroke="black" stroke-width="1.5"><title>.github/workflows/doxygen.yml</title></rect>
-<rect x="944.46" y="36" width="165.99" height="113.35" fill="greenyellow" stroke="black" stroke-width="1.5"><title>.github/workflows/arduino-compile.yml</title></rect>
-<rect x="944.46" y="149.35" width="165.99" height="99.09" fill="greenyellow" stroke="black" stroke-width="1.5"><title>.github/workflows/pico-compile.yml</title></rect>
-<rect x="1110.44" y="36" width="53.56" height="212.44" fill="greenyellow" stroke="black" stroke-width="1.5"><title>.github/workflows/arduino-lint.yml</title></rect>
-<rect x="730.13" y="260.44" width="236.95" height="410.89" fill="white" stroke="black" stroke-width="1.5" />
-<rect x="736.13" y="266.44" width="115.22" height="177.52" fill="white" stroke="black" stroke-width="1.5" />
-<rect x="742.13" y="272.44" width="103.22" height="165.52" fill="skyblue" stroke="black" stroke-width="1.5"><title>examples/ej04_dosBotones/ej04_dosBotones.ino</title></rect>
-<rect x="851.35" y="266.44" width="109.72" height="177.52" fill="white" stroke="black" stroke-width="1.5" />
-<rect x="857.35" y="272.44" width="97.72" height="165.52" fill="skyblue" stroke="black" stroke-width="1.5"><title>examples/ej02_alternarLed/ej02_alternarLed.ino</title></rect>
-<rect x="736.13" y="443.95" width="171.48" height="113.03" fill="white" stroke="black" stroke-width="1.5" />
-<rect x="742.13" y="449.95" width="159.48" height="101.03" fill="skyblue" stroke="black" stroke-width="1.5"><title>examples/ej00_leerBoton/ej00_leerBoton.ino</title></rect>
-<rect x="736.13" y="556.98" width="171.48" height="108.34" fill="white" stroke="black" stroke-width="1.5" />
-<rect x="742.13" y="562.98" width="159.48" height="96.34" fill="skyblue" stroke="black" stroke-width="1.5"><title>examples/ej03_contarPulsaciones/ej03_contarPulsaciones.ino</title></rect>
-<rect x="907.61" y="443.95" width="53.47" height="221.37" fill="white" stroke="black" stroke-width="1.5" />
-<rect x="913.61" y="449.95" width="41.47" height="209.37" fill="skyblue" stroke="black" stroke-width="1.5"><title>examples/ej01_encenderLed/ej01_encenderLed.ino</title></rect>
-<rect x="967.07" y="260.44" width="208.93" height="410.89" fill="white" stroke="black" stroke-width="1.5" />
-<rect x="973.07" y="266.44" width="196.93" height="336.22" fill="pink" stroke="black" stroke-width="1.5"><title>docs/principal.dox</title></rect>
-<rect x="973.07" y="602.65" width="196.93" height="62.67" fill="pink" stroke="black" stroke-width="1.5"><title>docs/index.html</title></rect>
-<rect x="730.13" y="671.32" width="211.42" height="104.68" fill="pink" stroke="black" stroke-width="1.5"><title>LICENSE</title></rect>
-<rect x="941.55" y="671.32" width="121.69" height="104.68" fill="greenyellow" stroke="black" stroke-width="1.5"><title>Doxyfile</title></rect>
-<rect x="1063.24" y="671.32" width="58.96" height="104.68" fill="greenyellow" stroke="black" stroke-width="1.5"><title>library.properties</title></rect>
-<rect x="1122.2" y="671.32" width="53.8" height="91.93" fill="pink" stroke="black" stroke-width="1.5"><title>keywords.txt</title></rect>
-<rect x="1122.2" y="763.25" width="53.8" height="12.75" fill="greenyellow" stroke="black" stroke-width="1.5"><title>.gitignore</title></rect>
+<g font-family="'Necto Mono', ui-monospace, Menlo, monospace" fill="black">
+<text x="24" y="48" font-size="26">piruetasxyz/Boton</text>
+<text x="24" y="70" font-size="14">estructura de archivos: el área de cada caja es el tamaño del archivo</text>
+<text x="1063.16" y="48" font-size="14">configuración</text>
+<rect x="1039.16" y="36" width="16" height="16" fill="greenyellow" stroke="black" stroke-width="1.5" />
+<text x="975.76" y="48" font-size="14">texto</text>
+<rect x="951.76" y="36" width="16" height="16" fill="pink" stroke="black" stroke-width="1.5" />
+<text x="862.32" y="48" font-size="14">ejemplos</text>
+<rect x="838.32" y="36" width="16" height="16" fill="skyblue" stroke="black" stroke-width="1.5" />
+<text x="766.24" y="48" font-size="14">código</text>
+<rect x="742.24" y="36" width="16" height="16" fill="orange" stroke="black" stroke-width="1.5" />
+</g>
+<g font-family="'Necto Mono', ui-monospace, Menlo, monospace">
+<rect x="24" y="88" width="381.32" height="688" fill="white" stroke="black" stroke-width="1.5" />
+<text x="28" y="103" font-size="12">pico/</text>
+<rect x="30" y="110" width="369.32" height="288.03" fill="greenyellow" stroke="black" stroke-width="1.5"><title>pico/pico_sdk_import.cmake</title></rect>
+<text x="34" y="126" font-size="15">pico_sdk_import.cmake</text>
+<rect x="30" y="398.03" width="219.71" height="146.17" fill="greenyellow" stroke="black" stroke-width="1.5"><title>pico/CMakeLists.txt</title></rect>
+<text x="34" y="414.03" font-size="15">CMakeLists.txt</text>
+<rect x="249.71" y="398.03" width="149.61" height="146.17" fill="white" stroke="black" stroke-width="1.5" />
+<text x="253.71" y="413.03" font-size="12">ej04_dosBotones/</text>
+<rect x="255.71" y="420.03" width="137.61" height="118.17" fill="skyblue" stroke="black" stroke-width="1.5"><title>pico/ej04_dosBotones/main.cpp</title></rect>
+<text x="259.71" y="436.03" font-size="15">main.cpp</text>
+<rect x="30" y="544.2" width="189.39" height="113.13" fill="white" stroke="black" stroke-width="1.5" />
+<text x="34" y="559.2" font-size="12">ej00_leerBoton/</text>
+<rect x="36" y="566.2" width="177.39" height="85.13" fill="skyblue" stroke="black" stroke-width="1.5"><title>pico/ej00_leerBoton/main.cpp</title></rect>
+<text x="40" y="582.2" font-size="15">main.cpp</text>
+<rect x="30" y="657.33" width="189.39" height="112.67" fill="white" stroke="black" stroke-width="1.5" />
+<text x="34" y="672.33" font-size="12">ej02_alternarLed/</text>
+<rect x="36" y="679.33" width="177.39" height="84.67" fill="skyblue" stroke="black" stroke-width="1.5"><title>pico/ej02_alternarLed/main.cpp</title></rect>
+<text x="40" y="695.33" font-size="15">main.cpp</text>
+<rect x="219.39" y="544.2" width="179.93" height="106.62" fill="white" stroke="black" stroke-width="1.5" />
+<text x="223.39" y="559.2" font-size="12">ej03_contarPulsaciones/</text>
+<rect x="225.39" y="566.2" width="167.93" height="78.62" fill="skyblue" stroke="black" stroke-width="1.5"><title>pico/ej03_contarPulsaciones/main.cpp</title></rect>
+<text x="229.39" y="582.2" font-size="15">main.cpp</text>
+<rect x="219.39" y="650.82" width="117.83" height="119.18" fill="white" stroke="black" stroke-width="1.5" />
+<rect x="225.39" y="656.82" width="105.83" height="107.18" fill="skyblue" stroke="black" stroke-width="1.5"><title>pico/ej01_encenderLed/main.cpp</title></rect>
+<text x="229.39" y="672.82" font-size="15">main.cpp</text>
+<rect x="337.22" y="650.82" width="62.1" height="119.18" fill="orange" stroke="black" stroke-width="1.5"><title>pico/PicoHardware.cpp</title></rect>
+<rect x="405.32" y="88" width="324.81" height="346.58" fill="white" stroke="black" stroke-width="1.5" />
+<text x="409.32" y="103" font-size="12">src/</text>
+<rect x="411.32" y="110" width="184.13" height="216.72" fill="orange" stroke="black" stroke-width="1.5"><title>src/Boton.h</title></rect>
+<text x="415.32" y="126" font-size="15">Boton.h</text>
+<rect x="595.45" y="110" width="128.68" height="216.72" fill="orange" stroke="black" stroke-width="1.5"><title>src/Hardware.h</title></rect>
+<text x="599.45" y="126" font-size="15">Hardware.h</text>
+<rect x="411.32" y="326.72" width="258.44" height="101.85" fill="orange" stroke="black" stroke-width="1.5"><title>src/Boton.cpp</title></rect>
+<text x="415.32" y="342.72" font-size="15">Boton.cpp</text>
+<rect x="669.76" y="326.72" width="54.37" height="101.85" fill="white" stroke="black" stroke-width="1.5" />
+<rect x="675.76" y="332.72" width="42.37" height="89.85" fill="orange" stroke="black" stroke-width="1.5"><title>src/arduino/ArduinoHardware.cpp</title></rect>
+<rect x="405.32" y="434.58" width="324.81" height="341.42" fill="pink" stroke="black" stroke-width="1.5"><title>README.md</title></rect>
+<text x="409.32" y="450.58" font-size="15">README.md</text>
+<rect x="730.13" y="88" width="231.8" height="416.08" fill="white" stroke="black" stroke-width="1.5" />
+<text x="734.13" y="103" font-size="12">.github/</text>
+<rect x="736.13" y="110" width="219.8" height="388.08" fill="white" stroke="black" stroke-width="1.5" />
+<text x="740.13" y="125" font-size="12">workflows/</text>
+<rect x="742.13" y="132" width="207.8" height="172.7" fill="greenyellow" stroke="black" stroke-width="1.5"><title>.github/workflows/doxygen.yml</title></rect>
+<text x="746.13" y="148" font-size="15">doxygen.yml</text>
+<rect x="742.13" y="304.7" width="157.11" height="99.98" fill="greenyellow" stroke="black" stroke-width="1.5"><title>.github/workflows/arduino-compile.yml</title></rect>
+<text x="746.13" y="318.3" font-size="12">arduino-compile.yml</text>
+<rect x="742.13" y="404.68" width="157.11" height="87.4" fill="greenyellow" stroke="black" stroke-width="1.5"><title>.github/workflows/pico-compile.yml</title></rect>
+<text x="746.13" y="420.68" font-size="15">pico-compile.yml</text>
+<rect x="899.24" y="304.7" width="50.69" height="187.39" fill="greenyellow" stroke="black" stroke-width="1.5"><title>.github/workflows/arduino-lint.yml</title></rect>
+<rect x="961.93" y="88" width="214.07" height="416.08" fill="white" stroke="black" stroke-width="1.5" />
+<text x="965.93" y="103" font-size="12">examples/</text>
+<rect x="967.93" y="110" width="103.51" height="172.71" fill="white" stroke="black" stroke-width="1.5" />
+<rect x="973.93" y="116" width="91.51" height="160.71" fill="skyblue" stroke="black" stroke-width="1.5"><title>examples/ej04_dosBotones/ej04_dosBotones.ino</title></rect>
+<rect x="1071.44" y="110" width="98.56" height="172.71" fill="white" stroke="black" stroke-width="1.5" />
+<rect x="1077.44" y="116" width="86.56" height="160.71" fill="skyblue" stroke="black" stroke-width="1.5"><title>examples/ej02_alternarLed/ej02_alternarLed.ino</title></rect>
+<rect x="967.93" y="282.71" width="103.18" height="164.18" fill="white" stroke="black" stroke-width="1.5" />
+<rect x="973.93" y="288.71" width="91.18" height="152.18" fill="skyblue" stroke="black" stroke-width="1.5"><title>examples/ej00_leerBoton/ej00_leerBoton.ino</title></rect>
+<rect x="1071.11" y="282.71" width="98.89" height="164.18" fill="white" stroke="black" stroke-width="1.5" />
+<rect x="1077.11" y="288.71" width="86.89" height="152.18" fill="skyblue" stroke="black" stroke-width="1.5"><title>examples/ej03_contarPulsaciones/ej03_contarPulsaciones.ino</title></rect>
+<rect x="967.93" y="446.89" width="202.07" height="51.19" fill="white" stroke="black" stroke-width="1.5" />
+<rect x="973.93" y="452.89" width="190.07" height="39.19" fill="skyblue" stroke="black" stroke-width="1.5"><title>examples/ej01_encenderLed/ej01_encenderLed.ino</title></rect>
+<text x="977.93" y="466.49" font-size="12">ej01_encenderLed.ino</text>
+<rect x="730.13" y="504.08" width="288.83" height="271.92" fill="white" stroke="black" stroke-width="1.5" />
+<text x="734.13" y="519.08" font-size="12">docs/</text>
+<rect x="736.13" y="526.08" width="233.34" height="243.92" fill="pink" stroke="black" stroke-width="1.5"><title>docs/principal.dox</title></rect>
+<text x="740.13" y="542.08" font-size="15">principal.dox</text>
+<rect x="969.47" y="526.08" width="43.49" height="243.92" fill="pink" stroke="black" stroke-width="1.5"><title>docs/index.html</title></rect>
+<rect x="1018.96" y="504.08" width="157.04" height="128.94" fill="pink" stroke="black" stroke-width="1.5"><title>LICENSE</title></rect>
+<text x="1022.96" y="520.08" font-size="15">LICENSE</text>
+<rect x="1018.96" y="633.02" width="81.51" height="142.98" fill="greenyellow" stroke="black" stroke-width="1.5"><title>Doxyfile</title></rect>
+<text x="1022.96" y="646.62" font-size="12">Doxyfile</text>
+<rect x="1100.47" y="633.02" width="75.53" height="74.76" fill="greenyellow" stroke="black" stroke-width="1.5"><title>library.properties</title></rect>
+<rect x="1100.47" y="707.78" width="66.33" height="68.22" fill="pink" stroke="black" stroke-width="1.5"><title>keywords.txt</title></rect>
+<rect x="1166.8" y="707.78" width="9.2" height="68.22" fill="greenyellow" stroke="black" stroke-width="1.5"><title>.gitignore</title></rect>
+</g>
 </svg>

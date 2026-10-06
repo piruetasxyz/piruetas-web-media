@@ -1,4 +1,4 @@
-name: Generar árboles, previews webp y redes sociales
+name: Generar árboles, gráficos, previews webp y redes sociales
 
 on:
   workflow_dispatch: {}
@@ -11,6 +11,8 @@ on:
       - "**/svg/*.svg"
       - "**/arbol/*.yaml"
       - "scripts/generar-arboles.js"
+      - "**/grafico/*.yaml"
+      - "scripts/generar-graficos.js"
       - "scripts/generar-webp.sh"
       - "scripts/generar-redes-sociales.sh"
 
@@ -34,6 +36,9 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
         run: node scripts/generar-arboles.js
 
+      - name: Generar gráficos (svg/*.svg) desde grafico/*.yaml
+        run: node scripts/generar-graficos.js
+
       - name: Instalar cwebp, rsvg-convert e ImageMagick
         run: sudo apt-get update && sudo apt-get install -y webp librsvg2-bin imagemagick
 
@@ -51,6 +56,6 @@ jobs:
           if git diff --cached --quiet; then
             echo "Sin cambios que commitear."
           else
-            git commit -m "Generar árboles, previews webp y redes sociales automáticamente"
+            git commit -m "Generar árboles, gráficos, previews webp y redes sociales automáticamente"
             git push
           fi
