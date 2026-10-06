@@ -1,0 +1,6 @@
+# scripts/generar-graficos.js compila src/*.cpp de la última versión
+# publicada (release) de este repositorio junto a
+# scripts/simuladores/boton.cpp y dibuja ../svg/boton-pulsaciones.svg:
+# pulsaciones con rebotes cada vez más rápidas, y cuáles llegan a getValor()
+repositorio: 'piruetasxyz/Boton'
+tipo: 'pulsaciones'

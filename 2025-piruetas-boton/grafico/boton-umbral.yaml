@@ -1,6 +1,6 @@
 # scripts/generar-graficos.js compila src/*.cpp de la última versión
 # publicada (release) de este repositorio junto a
-# scripts/simuladores/boton.cpp, lo corre sobre un botón simulado
-# con rebotes y dibuja ../svg/boton-grafico.svg
+# scripts/simuladores/boton.cpp y dibuja ../svg/boton-umbral.svg:
+# pulsos sin rebotes cada vez más largos, y cuáles acepta getValor()
 repositorio: 'piruetasxyz/Boton'
-tipo: 'antirrebote'
+tipo: 'umbral'

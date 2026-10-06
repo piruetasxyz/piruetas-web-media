@@ -1,4 +1,4 @@
-/* Simulador para los gráficos de tipo 'mapeo' (Perilla).
+/* Simulador para los gráficos de Perilla.
 
    Implementa PerillaHardware (src/Hardware.h de Perilla) con una
    patita análoga simulada, y corre la Perilla de verdad: este archivo

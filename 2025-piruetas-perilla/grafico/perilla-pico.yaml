@@ -1,0 +1,6 @@
+# scripts/generar-graficos.js compila src/*.cpp de la última versión
+# publicada (release) de este repositorio junto a
+# scripts/simuladores/perilla.cpp y dibuja ../svg/perilla-pico.svg:
+# lecturas de 12 bits de Raspberry Pi Pico, con y sin setRangoLeido(0, 4095)
+repositorio: 'piruetasxyz/Perilla'
+tipo: 'pico'

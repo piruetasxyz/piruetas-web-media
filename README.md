@@ -52,10 +52,17 @@ node scripts/generar-arboles.js
 
 ### Gráficos
 
-Un gráfico de lo que hace la biblioteca: [`scripts/generar-graficos.js`](scripts/generar-graficos.js) clona la última versión publicada (release) del repositorio, compila sus `src/*.cpp` de verdad junto a un simulador de [`scripts/simuladores/`](scripts/simuladores/) que implementa su `src/Hardware.h` con una patita simulada, lo corre sobre una entrada simulada, y dibuja arriba la entrada y abajo lo que entrega la biblioteca. No hay copia de la biblioteca en JS: el gráfico muestra lo que hace la versión publicada, y el título dice cuál es. Cada `grafico/<nombre>.yaml` es plano (`clave: valor`), con `repositorio`, `tipo` y, si se quiere fijar una versión en vez de la última release, `version`. El `tipo` elige el gráfico y el simulador:
+Un gráfico de lo que hace la biblioteca: [`scripts/generar-graficos.js`](scripts/generar-graficos.js) clona la última versión publicada (release) del repositorio, compila sus `src/*.cpp` de verdad junto al simulador de la biblioteca en [`scripts/simuladores/`](scripts/simuladores/), que implementa su `src/Hardware.h` con una patita simulada, lo corre sobre una entrada simulada, y dibuja arriba la entrada y abajo lo que entrega la biblioteca. No hay copia de la biblioteca en JS: el gráfico muestra lo que hace la versión publicada, y el título dice cuál es. Cada `grafico/<nombre>.yaml` es plano (`clave: valor`), con `repositorio`, `tipo` y, si se quiere fijar una versión en vez de la última release, `version`. El `tipo` elige el gráfico, y cada biblioteca puede tener varios (un `.yaml` por gráfico):
 
-- `antirrebote` (Boton): un botón con rebotes, y lo que entrega `getValor()`.
-- `mapeo` (Perilla): una perilla girando, y lo que entrega `getValorMapeado()`.
+- Boton (`simuladores/boton.cpp`):
+  - `antirrebote`: un botón con rebotes, y lo que entrega `getValor()`.
+  - `umbral`: pulsos sin rebotes cada vez más largos, y cuáles acepta `getValor()`.
+  - `pulsaciones`: pulsaciones con rebotes cada vez más rápidas, y cuáles llegan a `getValor()`.
+- Perilla (`simuladores/perilla.cpp`):
+  - `mapeo`: una perilla girando, y lo que entrega `getValorMapeado()`.
+  - `rangos`: la curva de `getValorMapeado()` para cada lectura, con los rangos 0-100, 0-255 y 100-0.
+  - `ruido`: una perilla girada muy lento con ruido, y cómo salta `getValorMapeado()`.
+  - `pico`: lecturas de 12 bits de Raspberry Pi Pico, con y sin `setRangoLeido(0, 4095)`.
 
 El workflow corre también una vez al día, así que al publicar una release nueva de la biblioteca el gráfico se redibuja solo (o al tiro, corriendo el workflow a mano). Si una versión no compila con el simulador, por ejemplo una release antigua sin `src/Hardware.h`, queda el svg anterior y el workflow lo avisa. Para correrlo localmente hace falta `git` y un compilador de C++:
 

@@ -1,4 +1,4 @@
-/* Simulador para los gráficos de tipo 'antirrebote' (Boton).
+/* Simulador para los gráficos de Boton.
 
    Implementa BotonHardware (src/Hardware.h de Boton) con una patita y
    un reloj simulados, y corre el Boton de verdad: este archivo se

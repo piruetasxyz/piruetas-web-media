@@ -1,0 +1,6 @@
+# scripts/generar-graficos.js compila src/*.cpp de la última versión
+# publicada (release) de este repositorio junto a
+# scripts/simuladores/perilla.cpp y dibuja ../svg/perilla-ruido.svg:
+# una perilla girada muy lento con ruido, y cómo salta getValorMapeado()
+repositorio: 'piruetasxyz/Perilla'
+tipo: 'ruido'

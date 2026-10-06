@@ -1,0 +1,6 @@
+# scripts/generar-graficos.js compila src/*.cpp de la última versión
+# publicada (release) de este repositorio junto a
+# scripts/simuladores/perilla.cpp y dibuja ../svg/perilla-rangos.svg:
+# la curva de getValorMapeado() para los rangos 0-100, 0-255 y 100-0
+repositorio: 'piruetasxyz/Perilla'
+tipo: 'rangos'

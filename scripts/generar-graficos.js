@@ -10,19 +10,23 @@
    No hay copia de la biblioteca acá. Por cada gráfico:
      1. pregunta a la API de GitHub cuál es la última versión publicada
         (release) del repositorio, o usa `version` si el .yaml la fija;
-     2. clona esa versión y compila sus src/*.cpp junto a un simulador,
-        scripts/simuladores/<tipo>.cpp, que implementa src/Hardware.h
-        con una patita (y un reloj) simulados;
+     2. clona esa versión y compila sus src/*.cpp junto al simulador de
+        la biblioteca, scripts/simuladores/<biblioteca>.cpp, que
+        implementa src/Hardware.h con una patita (y un reloj) simulados;
      3. le pasa la entrada simulada por stdin y lee lo que entrega la
         biblioteca por stdout.
    Así el gráfico muestra lo que hace la versión publicada, y cambia
-   solo cuando sale una versión nueva.
+   solo cuando sale una versión nueva. Cada versión se compila una sola
+   vez por corrida, aunque la usen varios gráficos.
 
    Por cada <proyecto>/grafico/<nombre>.yaml dibuja <proyecto>/svg/<nombre>.svg.
    El .yaml es plano, una `clave: valor` por línea:
      repositorio: 'piruetasxyz/Boton'
-     tipo: 'antirrebote'   (Boton) o 'mapeo' (Perilla)
+     tipo: 'antirrebote'
      version: 'v0.1.1'     (opcional; sin ella, la última release)
+   y `tipo` elige el gráfico (ver ESCENARIOS más abajo):
+     Boton:   'antirrebote', 'umbral', 'pulsaciones'
+     Perilla: 'mapeo', 'rangos', 'ruido', 'pico'
 
    Si una versión no compila con el simulador (por ejemplo, una release
    antigua sin src/Hardware.h), deja el svg anterior y avisa, sin
@@ -85,9 +89,9 @@ async function ultimaVersion(repositorio) {
 }
 
 /* Clona `version` de `repositorio` y compila sus src/*.cpp (sin
-   subcarpetas, que son de cada plataforma) junto al simulador del
-   tipo. Devuelve la ruta del ejecutable. */
-function compilarSimulador(repositorio, version, tipo, carpetaTemporal) {
+   subcarpetas, que son de cada plataforma) junto al simulador de la
+   biblioteca. Devuelve la ruta del ejecutable. */
+function compilarSimulador(repositorio, version, simulador, carpetaTemporal) {
   const carpetaRepo = path.join(carpetaTemporal, 'repo');
   execFileSync('git', ['clone', '--quiet', '--depth', '1', '--branch', version, `https://github.com/${repositorio}.git`, carpetaRepo], {
     stdio: ['ignore', 'ignore', 'pipe'],
@@ -98,7 +102,7 @@ function compilarSimulador(repositorio, version, tipo, carpetaTemporal) {
     .filter((f) => f.endsWith('.cpp'))
     .map((f) => path.join(carpetaSrc, f));
   const ejecutable = path.join(carpetaTemporal, 'simulador');
-  execFileSync('c++', ['-std=c++17', '-Wall', `-I${carpetaSrc}`, ...fuentesCpp, path.join(SIMULADORES, `${tipo}.cpp`), '-o', ejecutable], {
+  execFileSync('c++', ['-std=c++17', '-Wall', `-I${carpetaSrc}`, ...fuentesCpp, path.join(SIMULADORES, `${simulador}.cpp`), '-o', ejecutable], {
     stdio: ['ignore', 'ignore', 'pipe'],
   });
   return ejecutable;
@@ -115,31 +119,86 @@ function correrSimulador(ejecutable, argumentos, entrada) {
     .map((linea) => linea.split(' ').map(Number));
 }
 
+const marcasBooleanas = [[0, 'false'], [1, 'true']];
+const marcasRango = (min, max) => [[min, String(min)], [(min + max) / 2, String(Math.round((min + max) / 2))], [max, String(max)]];
+
 /* ---------- Boton ---------- */
 
-/* Un botón real: suelto (true), se presiona con rebotes, queda
-   presionado, se suelta con rebotes. Las patitas con pull-up leen
-   true suelto y false presionado. */
-function simularAntirrebote(ejecutable) {
-  const duracion = 600;
-  const cambiosPresion = [100, 102, 103, 106, 108, 111, 116];
-  const cambiosSoltar = [360, 361, 364, 366, 371];
-  const cambios = [...cambiosPresion, ...cambiosSoltar];
-
+/* La lectura de la patita a partir de los milisegundos en que cambia.
+   Las patitas con pull-up leen 1 (true) suelto y 0 (false) presionado. */
+function lecturaBoton(duracion, cambios) {
   const entrada = [];
   let lectura = 1;
   for (let t = 0; t <= duracion; t++) {
     if (cambios.includes(t)) lectura = 1 - lectura;
     entrada.push([t, lectura]);
   }
-  const filas = correrSimulador(ejecutable, [], entrada);
+  return entrada;
+}
+
+// un contacto que rebota: 5 cambios en 7 ms, que terminan en el estado contrario
+const rebote = (t) => [t, t + 2, t + 3, t + 5, t + 7];
+
+function panelesBoton(filas, tituloEntrada) {
+  return [
+    { titulo: tituloEntrada, serie: filas.map(([t, l]) => [t, l]), min: 0, max: 1, marcas: marcasBooleanas, color: 'pink' },
+    { titulo: 'getValor()', serie: filas.map(([t, , v]) => [t, v]), min: 0, max: 1, marcas: marcasBooleanas, color: 'greenyellow' },
+  ];
+}
+
+/* Un botón real: suelto, se presiona con rebotes, queda presionado, se
+   suelta con rebotes. */
+function escenarioAntirrebote(correr) {
+  const duracion = 600;
+  const cambios = [100, 102, 103, 106, 108, 111, 116, 360, 361, 364, 366, 371];
   return {
     subtitulo: 'antirrebote: actualizar() cada 1 ms sobre un botón simulado con rebotes',
     ejeX: { min: 0, max: duracion, paso: 100, unidad: 'ms' },
-    paneles: [
-      { titulo: 'lectura de la patita (con rebotes)', serie: filas.map(([t, l]) => [t, l]), min: 0, max: 1, marcas: [[0, 'false'], [1, 'true']], color: 'pink' },
-      { titulo: 'getValor()', serie: filas.map(([t, , v]) => [t, v]), min: 0, max: 1, marcas: [[0, 'false'], [1, 'true']], color: 'greenyellow' },
-    ],
+    paneles: panelesBoton(correr([], lecturaBoton(duracion, cambios)), 'lectura de la patita (con rebotes)'),
+  };
+}
+
+/* Pulsos limpios, sin rebotes, cada vez más largos: cuánto tiene que
+   durar un cambio para que Boton lo acepte. */
+function escenarioUmbral(correr) {
+  const largos = [20, 40, 50, 60, 100];
+  const cambios = [];
+  let inicio = 100;
+  largos.forEach((largo) => {
+    cambios.push(inicio, inicio + largo);
+    inicio += largo + 200;
+  });
+  // redondeado a la marca siguiente del eje, para que la última lleve la unidad
+  const duracion = Math.ceil(inicio / 200) * 200;
+  return {
+    subtitulo: `umbral: pulsos sin rebotes de ${largos.join(', ')} ms; actualizar() cada 1 ms`,
+    ejeX: { min: 0, max: duracion, paso: 200, unidad: 'ms' },
+    paneles: panelesBoton(correr([], lecturaBoton(duracion, cambios)), 'lectura de la patita (pulsos sin rebotes)'),
+  };
+}
+
+/* Pulsaciones con rebotes, primero lentas y después cada vez más
+   rápidas: hasta qué ritmo se pueden contar. */
+function escenarioPulsaciones(correr) {
+  const grupos = [
+    { largo: 150, veces: 3 },
+    { largo: 70, veces: 4 },
+    { largo: 35, veces: 6 },
+  ];
+  const cambios = [];
+  let t = 100;
+  grupos.forEach(({ largo, veces }) => {
+    for (let i = 0; i < veces; i++) {
+      cambios.push(...rebote(t), ...rebote(t + largo));
+      t += 2 * largo;
+    }
+    t += 150;
+  });
+  const duracion = Math.ceil(t / 250) * 250;
+  return {
+    subtitulo: `pulsaciones: presionar y soltar cada ${grupos.map((g) => g.largo).join(', ')} ms, con rebotes`,
+    ejeX: { min: 0, max: duracion, paso: 250, unidad: 'ms' },
+    paneles: panelesBoton(correr([], lecturaBoton(duracion, cambios)), 'lectura de la patita (con rebotes)'),
   };
 }
 
@@ -147,7 +206,7 @@ function simularAntirrebote(ejecutable) {
 
 /* Una mano gira la perilla de un extremo al otro y la devuelve hasta
    la mitad, con un poco de ruido de la lectura análoga. */
-function simularMapeo(ejecutable, config) {
+function escenarioMapeo(correr, config) {
   const duracion = 4000;
   const azar = aleatorio(7);
   const giro = (t) => {
@@ -161,20 +220,100 @@ function simularMapeo(ejecutable, config) {
     const ideal = config.leidoMin + giro(t) * (config.leidoMax - config.leidoMin);
     entrada.push([t, Math.round(Math.min(Math.max(ideal + (azar() - 0.5) * 12, config.leidoMin), config.leidoMax))]);
   }
-  const rangos = [config.leidoMin, config.leidoMax, config.mapeadoMin, config.mapeadoMax].map(String);
-  const filas = correrSimulador(ejecutable, rangos, entrada);
-  const marcas = (min, max) => [[min, String(min)], [(min + max) / 2, String(Math.round((min + max) / 2))], [max, String(max)]];
+  const filas = correr([config.leidoMin, config.leidoMax, config.mapeadoMin, config.mapeadoMax], entrada);
   return {
     subtitulo: `mapeo: leer() cada 10 ms, de ${config.leidoMin}-${config.leidoMax} a ${config.mapeadoMin}-${config.mapeadoMax}`,
     ejeX: { min: 0, max: duracion, paso: 500, unidad: 'ms' },
     paneles: [
-      { titulo: 'getValor(): lectura de la patita', serie: filas.map(([t, l]) => [t, l]), min: config.leidoMin, max: config.leidoMax, marcas: marcas(config.leidoMin, config.leidoMax), color: 'pink' },
-      { titulo: 'getValorMapeado()', serie: filas.map(([t, , m]) => [t, m]), min: config.mapeadoMin, max: config.mapeadoMax, marcas: marcas(config.mapeadoMin, config.mapeadoMax), color: 'greenyellow' },
+      { titulo: 'getValor(): lectura de la patita', serie: filas.map(([t, l]) => [t, l]), min: config.leidoMin, max: config.leidoMax, marcas: marcasRango(config.leidoMin, config.leidoMax), color: 'pink' },
+      { titulo: 'getValorMapeado()', serie: filas.map(([t, , m]) => [t, m]), min: config.mapeadoMin, max: config.mapeadoMax, marcas: marcasRango(config.mapeadoMin, config.mapeadoMax), color: 'greenyellow' },
     ],
   };
 }
 
-const GRAFICOS = { antirrebote: simularAntirrebote, mapeo: simularMapeo };
+/* Todas las lecturas de `min` a `max`, una vez cada una: el eje x deja
+   de ser el tiempo y pasa a ser la lectura. */
+function barrido(min, max, paso = 1) {
+  const entrada = [];
+  for (let v = min; v <= max; v += paso) entrada.push([v, v]);
+  return entrada;
+}
+
+/* La curva completa de getValorMapeado() para varios rangos mapeados,
+   incluido uno invertido. */
+function escenarioRangos(correr) {
+  const rangos = [
+    [0, 100, 'greenyellow'],
+    [0, 255, 'skyblue'],
+    [100, 0, 'orange'],
+  ];
+  return {
+    subtitulo: 'rangos: getValorMapeado() para cada lectura de 0 a 1023, con setRangoLeido(0, 1023)',
+    ejeX: { min: 0, max: 1023, marcas: [0, 256, 512, 768, 1023], unidad: '(lectura)' },
+    paneles: rangos.map(([min, max, color]) => {
+      const filas = correr([0, 1023, min, max], barrido(0, 1023));
+      const [abajo, arriba] = [Math.min(min, max), Math.max(min, max)];
+      return { titulo: `setRangoMapeado(${min}, ${max})`, serie: filas.map(([t, , m]) => [t, m]), min: abajo, max: arriba, marcas: marcasRango(abajo, arriba), color };
+    }),
+  };
+}
+
+/* Una perilla girada muy lento, de 480 a 540, con el ruido de la
+   lectura análoga (±6): leer() no filtra, así que el valor mapeado
+   salta entre dos números en cada cambio. */
+function escenarioRuido(correr) {
+  const duracion = 4000;
+  const azar = aleatorio(11);
+  const entrada = [];
+  for (let t = 0; t <= duracion; t += 10) {
+    entrada.push([t, Math.round(480 + (60 * t) / duracion + (azar() - 0.5) * 12)]);
+  }
+  const filas = correr([0, 1023, 0, 100], entrada);
+  const lecturas = filas.map(([, l]) => l);
+  const mapeados = filas.map(([, , m]) => m);
+  const [lMin, lMax] = [Math.min(...lecturas), Math.max(...lecturas)];
+  const [mMin, mMax] = [Math.min(...mapeados), Math.max(...mapeados)];
+  return {
+    subtitulo: 'ruido: una perilla girada muy lento (480 a 540) con ruido de ±6, leer() cada 10 ms, mapeo a 0-100',
+    ejeX: { min: 0, max: duracion, paso: 500, unidad: 'ms' },
+    paneles: [
+      { titulo: 'getValor(): lectura de la patita', serie: filas.map(([t, l]) => [t, l]), min: lMin, max: lMax, marcas: [[lMin, String(lMin)], [lMax, String(lMax)]], color: 'pink' },
+      { titulo: 'getValorMapeado()', serie: filas.map(([t, , m]) => [t, m]), min: mMin, max: mMax, marcas: [[mMin, String(mMin)], [mMax, String(mMax)]], color: 'greenyellow' },
+    ],
+  };
+}
+
+/* En Raspberry Pi Pico la lectura análoga es de 12 bits (0 a 4095):
+   con el rango leído por defecto (0 a 1023) el valor mapeado se pasa
+   del rango, y con setRangoLeido(0, 4095) queda bien. */
+function escenarioPico(correr) {
+  const paneles = [
+    [1023, 'setRangoLeido(0, 1023), el que viene por defecto', 'orange'],
+    [4095, 'setRangoLeido(0, 4095)', 'greenyellow'],
+  ].map(([leidoMax, titulo, color]) => {
+    const filas = correr([0, leidoMax, 0, 100], barrido(0, 4095));
+    const serie = filas.map(([t, , m]) => [t, m]);
+    const max = Math.max(...serie.map(([, m]) => m));
+    return { titulo: `${titulo}: getValorMapeado()`, serie, min: 0, max, marcas: [...new Set([0, 100, max])].map((v) => [v, String(v)]), color };
+  });
+  return {
+    subtitulo: 'pico: lecturas de 12 bits (0 a 4095) mapeadas a 0-100, con setRangoMapeado(0, 100)',
+    ejeX: { min: 0, max: 4095, marcas: [0, 1023, 2048, 3072, 4095], unidad: '(lectura)' },
+    paneles,
+  };
+}
+
+/* Cada tipo de gráfico dice qué simulador usa (scripts/simuladores/)
+   y cómo arma la entrada y los paneles. */
+const ESCENARIOS = {
+  antirrebote: { simulador: 'boton', armar: escenarioAntirrebote },
+  umbral: { simulador: 'boton', armar: escenarioUmbral },
+  pulsaciones: { simulador: 'boton', armar: escenarioPulsaciones },
+  mapeo: { simulador: 'perilla', armar: escenarioMapeo },
+  rangos: { simulador: 'perilla', armar: escenarioRangos },
+  ruido: { simulador: 'perilla', armar: escenarioRuido },
+  pico: { simulador: 'perilla', armar: escenarioPico },
+};
 
 /* ---------- dibujo ---------- */
 
@@ -202,7 +341,8 @@ function dibujarPanel(panel, ejeX, x, y, ancho, alto, mostrarEjeX) {
     partes.push(`<text x="${n(x - 10)}" y="${n(escalaY(v) + 5)}" font-size="13" text-anchor="end">${escapar(texto)}</text>`);
   });
 
-  for (let t = ejeX.min; t <= ejeX.max; t += ejeX.paso) {
+  const marcasX = ejeX.marcas || Array.from({ length: Math.floor((ejeX.max - ejeX.min) / ejeX.paso) + 1 }, (_, i) => ejeX.min + i * ejeX.paso);
+  for (const t of marcasX) {
     const px = escalaX(t);
     partes.push(`<path d="M${n(px)} ${n(y + alto)} L${n(px)} ${n(y + alto + 6)}" stroke="black" stroke-width="${LINEA}" />`);
     if (mostrarEjeX) {
@@ -254,31 +394,49 @@ function buscarFuentes() {
 
 async function main() {
   const fuentes = buscarFuentes();
+  const carpetaTemporal = fs.mkdtempSync(path.join(os.tmpdir(), 'graficos-'));
+  // "repositorio@version/simulador" -> ejecutable (o el error al compilarlo)
+  const compilados = new Map();
   let fallidos = 0;
-  for (const rutaYaml of fuentes) {
-    const config = leerConfiguracion(rutaYaml);
-    const simular = GRAFICOS[config.tipo];
-    if (!simular) throw new Error(`${rutaYaml}: tipo desconocido "${config.tipo}"`);
-    const carpetaSvg = path.join(path.dirname(rutaYaml), '..', 'svg');
-    const rutaSvg = path.join(carpetaSvg, `${path.basename(rutaYaml).replace(/\.ya?ml$/, '')}.svg`);
 
-    const carpetaTemporal = fs.mkdtempSync(path.join(os.tmpdir(), 'grafico-'));
-    try {
-      const version = config.version || (await ultimaVersion(config.repositorio));
-      const ejecutable = compilarSimulador(config.repositorio, version, config.tipo, carpetaTemporal);
-      const grafico = simular(ejecutable, config);
-      fs.mkdirSync(carpetaSvg, { recursive: true });
-      fs.writeFileSync(rutaSvg, dibujarGrafico({ ...config, titulo: `${config.repositorio} ${version}` }, grafico), 'utf8');
-      console.log(`  ${path.relative(RAIZ, rutaSvg)} (${config.repositorio} ${version})`);
-    } catch (error) {
-      fallidos++;
-      const detalle = (error.stderr ? error.stderr.toString() : error.message).trim();
-      // ::warning:: aparece como aviso en el resumen del GitHub Action
-      console.log(`::warning::${path.relative(RAIZ, rutaYaml)}: no se pudo generar, queda el svg anterior. ${detalle.split('\n')[0]}`);
-      console.error(detalle);
-    } finally {
-      fs.rmSync(carpetaTemporal, { recursive: true, force: true });
+  try {
+    for (const rutaYaml of fuentes) {
+      const config = leerConfiguracion(rutaYaml);
+      const escenario = ESCENARIOS[config.tipo];
+      if (!escenario) throw new Error(`${rutaYaml}: tipo desconocido "${config.tipo}"`);
+      const carpetaSvg = path.join(path.dirname(rutaYaml), '..', 'svg');
+      const rutaSvg = path.join(carpetaSvg, `${path.basename(rutaYaml).replace(/\.ya?ml$/, '')}.svg`);
+
+      try {
+        const version = config.version || (await ultimaVersion(config.repositorio));
+        const clave = `${config.repositorio}@${version}/${escenario.simulador}`;
+        if (!compilados.has(clave)) {
+          try {
+            const carpeta = path.join(carpetaTemporal, String(compilados.size));
+            fs.mkdirSync(carpeta);
+            compilados.set(clave, compilarSimulador(config.repositorio, version, escenario.simulador, carpeta));
+          } catch (error) {
+            compilados.set(clave, error);
+          }
+        }
+        const ejecutable = compilados.get(clave);
+        if (ejecutable instanceof Error) throw ejecutable;
+
+        const correr = (argumentos, entrada) => correrSimulador(ejecutable, argumentos.map(String), entrada);
+        const grafico = escenario.armar(correr, config);
+        fs.mkdirSync(carpetaSvg, { recursive: true });
+        fs.writeFileSync(rutaSvg, dibujarGrafico({ ...config, titulo: `${config.repositorio} ${version}` }, grafico), 'utf8');
+        console.log(`  ${path.relative(RAIZ, rutaSvg)} (${config.repositorio} ${version})`);
+      } catch (error) {
+        fallidos++;
+        const detalle = (error.stderr ? error.stderr.toString() : error.message).trim();
+        // ::warning:: aparece como aviso en el resumen del GitHub Action
+        console.log(`::warning::${path.relative(RAIZ, rutaYaml)}: no se pudo generar, queda el svg anterior. ${detalle.split('\n')[0]}`);
+        console.error(detalle);
+      }
     }
+  } finally {
+    fs.rmSync(carpetaTemporal, { recursive: true, force: true });
   }
   console.log(`\nListo: ${fuentes.length - fallidos} de ${fuentes.length} gráficos.`);
 }

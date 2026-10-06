@@ -1,6 +1,6 @@
 # scripts/generar-graficos.js compila src/*.cpp de la última versión
 # publicada (release) de este repositorio junto a
-# scripts/simuladores/mapeo.cpp, lo corre sobre una perilla simulada y
+# scripts/simuladores/perilla.cpp, lo corre sobre una perilla simulada y
 # dibuja ../svg/perilla-grafico.svg
 repositorio: 'piruetasxyz/Perilla'
 tipo: 'mapeo'
