@@ -1,29 +1,44 @@
 #!/usr/bin/env node
 /* Genera la segunda imagen de los proyectos de software (bibliotecas):
-   un gráfico de lo que hace la biblioteca, corriendo su lógica sobre
-   una entrada simulada. Arriba va la entrada (lo que lee la patita) y
-   abajo la salida (lo que entrega la biblioteca), en el mismo eje de
-   tiempo, con el estilo de los árboles de scripts/generar-arboles.js
-   (rellenos planos con los colores del sitio y borde negro).
+   un gráfico de lo que hace la biblioteca, corriendo su código C++ de
+   verdad sobre una entrada simulada. Arriba va la entrada (lo que lee
+   la patita) y abajo la salida (lo que entrega la biblioteca), en el
+   mismo eje de tiempo, con el estilo de los árboles de
+   scripts/generar-arboles.js (rellenos planos con los colores del
+   sitio y borde negro).
 
-   La lógica de cada biblioteca está portada a JS línea por línea desde
-   su src/*.cpp, para que el gráfico muestre lo que hace el código de
-   verdad, no lo que debería hacer. Si la biblioteca cambia, hay que
-   actualizar el port acá.
+   No hay copia de la biblioteca acá. Por cada gráfico:
+     1. pregunta a la API de GitHub cuál es la última versión publicada
+        (release) del repositorio, o usa `version` si el .yaml la fija;
+     2. clona esa versión y compila sus src/*.cpp junto a un simulador,
+        scripts/simuladores/<tipo>.cpp, que implementa src/Hardware.h
+        con una patita (y un reloj) simulados;
+     3. le pasa la entrada simulada por stdin y lee lo que entrega la
+        biblioteca por stdout.
+   Así el gráfico muestra lo que hace la versión publicada, y cambia
+   solo cuando sale una versión nueva.
 
    Por cada <proyecto>/grafico/<nombre>.yaml dibuja <proyecto>/svg/<nombre>.svg.
-   El .yaml es plano, una `clave: valor` por línea, y `tipo` elige el
-   gráfico:
-     tipo: 'antirrebote'   (Boton)
-     tipo: 'mapeo'         (Perilla)
+   El .yaml es plano, una `clave: valor` por línea:
+     repositorio: 'piruetasxyz/Boton'
+     tipo: 'antirrebote'   (Boton) o 'mapeo' (Perilla)
+     version: 'v0.1.1'     (opcional; sin ella, la última release)
 
-   Sin dependencias: solo Node.
+   Si una versión no compila con el simulador (por ejemplo, una release
+   antigua sin src/Hardware.h), deja el svg anterior y avisa, sin
+   detener a los demás gráficos.
+
+   Necesita Node 20, git y un compilador de C++ (c++). Si existe
+   GITHUB_TOKEN lo usa para la API de GitHub.
    Uso: node scripts/generar-graficos.js
 */
 const fs = require('fs');
+const os = require('os');
 const path = require('path');
+const { execFileSync } = require('child_process');
 
 const RAIZ = path.join(__dirname, '..');
+const SIMULADORES = path.join(__dirname, 'simuladores');
 
 const ANCHO = 1200;
 const ALTO = 800;
@@ -45,11 +60,12 @@ function leerConfiguracion(rutaYaml) {
     config[m[1]] = m[4] !== undefined && !Number.isNaN(Number(valor)) ? Number(valor) : valor;
   }
   if (!config.tipo) throw new Error(`${rutaYaml}: falta "tipo"`);
+  if (!config.repositorio) throw new Error(`${rutaYaml}: falta "repositorio"`);
   return config;
 }
 
 /* Generador pseudoaleatorio fijo (LCG), para que el ruido simulado
-   sea siempre el mismo y el svg solo cambie si cambia el código. */
+   sea siempre el mismo y el svg solo cambie si cambia la biblioteca. */
 function aleatorio(semilla) {
   let estado = semilla >>> 0;
   return () => {
@@ -58,111 +74,82 @@ function aleatorio(semilla) {
   };
 }
 
-/* ---------- Boton: port de src/Boton.cpp ---------- */
+/* ---------- la biblioteca de verdad ---------- */
 
-class Boton {
-  constructor(tiempoEntreRebotes, tiempoActual) {
-    this.tiempoEntreRebotes = tiempoEntreRebotes;
-    this.valorLeidoActual = true;
-    this.valorLeidoAnterior = true;
-    this.tiempoAnteriorDesrebotar = tiempoActual;
-  }
-
-  actualizar(lectura, tiempoActual) {
-    if (lectura !== this.valorLeidoAnterior) {
-      this.tiempoAnteriorDesrebotar = tiempoActual;
-    }
-    if (tiempoActual - this.tiempoAnteriorDesrebotar > this.tiempoEntreRebotes) {
-      if (lectura !== this.valorLeidoActual) {
-        this.valorLeidoActual = lectura;
-      }
-    }
-    this.valorLeidoAnterior = lectura;
-  }
-
-  getValor() {
-    return this.valorLeidoActual;
-  }
+async function ultimaVersion(repositorio) {
+  const cabeceras = { Accept: 'application/vnd.github+json', 'User-Agent': 'piruetas-web-media' };
+  if (process.env.GITHUB_TOKEN) cabeceras.Authorization = `Bearer ${process.env.GITHUB_TOKEN}`;
+  const respuesta = await fetch(`https://api.github.com/repos/${repositorio}/releases/latest`, { headers: cabeceras });
+  if (!respuesta.ok) throw new Error(`${repositorio}: sin release publicada (la API de GitHub respondió ${respuesta.status})`);
+  return (await respuesta.json()).tag_name;
 }
+
+/* Clona `version` de `repositorio` y compila sus src/*.cpp (sin
+   subcarpetas, que son de cada plataforma) junto al simulador del
+   tipo. Devuelve la ruta del ejecutable. */
+function compilarSimulador(repositorio, version, tipo, carpetaTemporal) {
+  const carpetaRepo = path.join(carpetaTemporal, 'repo');
+  execFileSync('git', ['clone', '--quiet', '--depth', '1', '--branch', version, `https://github.com/${repositorio}.git`, carpetaRepo], {
+    stdio: ['ignore', 'ignore', 'pipe'],
+  });
+  const carpetaSrc = path.join(carpetaRepo, 'src');
+  const fuentesCpp = fs
+    .readdirSync(carpetaSrc)
+    .filter((f) => f.endsWith('.cpp'))
+    .map((f) => path.join(carpetaSrc, f));
+  const ejecutable = path.join(carpetaTemporal, 'simulador');
+  execFileSync('c++', ['-std=c++17', '-Wall', `-I${carpetaSrc}`, ...fuentesCpp, path.join(SIMULADORES, `${tipo}.cpp`), '-o', ejecutable], {
+    stdio: ['ignore', 'ignore', 'pipe'],
+  });
+  return ejecutable;
+}
+
+/* Corre el simulador con una línea "t valor" por muestra y devuelve
+   sus líneas de salida como arreglos de números. */
+function correrSimulador(ejecutable, argumentos, entrada) {
+  const salida = execFileSync(ejecutable, argumentos, { input: entrada.map((fila) => fila.join(' ')).join('\n') + '\n' });
+  return salida
+    .toString()
+    .trim()
+    .split('\n')
+    .map((linea) => linea.split(' ').map(Number));
+}
+
+/* ---------- Boton ---------- */
 
 /* Un botón real: suelto (true), se presiona con rebotes, queda
    presionado, se suelta con rebotes. Las patitas con pull-up leen
    true suelto y false presionado. */
-function simularAntirrebote(config) {
+function simularAntirrebote(ejecutable) {
   const duracion = 600;
   const cambiosPresion = [100, 102, 103, 106, 108, 111, 116];
   const cambiosSoltar = [360, 361, 364, 366, 371];
   const cambios = [...cambiosPresion, ...cambiosSoltar];
 
-  const boton = new Boton(config.tiempoEntreRebotes, 0);
   const entrada = [];
-  const salida = [];
-  let lectura = true;
+  let lectura = 1;
   for (let t = 0; t <= duracion; t++) {
-    if (cambios.includes(t)) lectura = !lectura;
-    boton.actualizar(lectura, t);
-    entrada.push([t, lectura ? 1 : 0]);
-    salida.push([t, boton.getValor() ? 1 : 0]);
+    if (cambios.includes(t)) lectura = 1 - lectura;
+    entrada.push([t, lectura]);
   }
+  const filas = correrSimulador(ejecutable, [], entrada);
   return {
-    subtitulo: `antirrebote: actualizar() cada 1 ms, cambio aceptado después de ${config.tiempoEntreRebotes} ms estable`,
+    subtitulo: 'antirrebote: actualizar() cada 1 ms sobre un botón simulado con rebotes',
     ejeX: { min: 0, max: duracion, paso: 100, unidad: 'ms' },
     paneles: [
-      { titulo: 'lectura de la patita (con rebotes)', serie: entrada, min: 0, max: 1, marcas: [[0, 'false'], [1, 'true']], color: 'pink' },
-      { titulo: 'getValor()', serie: salida, min: 0, max: 1, marcas: [[0, 'false'], [1, 'true']], color: 'greenyellow' },
+      { titulo: 'lectura de la patita (con rebotes)', serie: filas.map(([t, l]) => [t, l]), min: 0, max: 1, marcas: [[0, 'false'], [1, 'true']], color: 'pink' },
+      { titulo: 'getValor()', serie: filas.map(([t, , v]) => [t, v]), min: 0, max: 1, marcas: [[0, 'false'], [1, 'true']], color: 'greenyellow' },
     ],
   };
 }
 
-/* ---------- Perilla: port de src/Perilla.cpp ---------- */
-
-// misma fórmula que mapear() en Perilla.cpp, con división entera de C
-function mapear(valor, entradaMin, entradaMax, salidaMin, salidaMax) {
-  if (entradaMax === entradaMin) return salidaMin;
-  return Math.trunc(((valor - entradaMin) * (salidaMax - salidaMin)) / (entradaMax - entradaMin)) + salidaMin;
-}
-
-class Perilla {
-  constructor() {
-    this.valorLeido = 0;
-    this.valorMapeado = 0;
-    this.setRangoLeido(0, 1023);
-    this.setRangoMapeado(0, 1023);
-  }
-
-  setRangoLeido(min, max) {
-    this.valorLeidoMin = min;
-    this.valorLeidoMax = max;
-  }
-
-  setRangoMapeado(min, max) {
-    this.valorMapeadoMin = min;
-    this.valorMapeadoMax = max;
-  }
-
-  leer(lectura) {
-    this.valorLeido = lectura;
-    this.valorMapeado = mapear(this.valorLeido, this.valorLeidoMin, this.valorLeidoMax, this.valorMapeadoMin, this.valorMapeadoMax);
-  }
-
-  getValor() {
-    return this.valorLeido;
-  }
-
-  getValorMapeado() {
-    return this.valorMapeado;
-  }
-}
+/* ---------- Perilla ---------- */
 
 /* Una mano gira la perilla de un extremo al otro y la devuelve hasta
    la mitad, con un poco de ruido de la lectura análoga. */
-function simularMapeo(config) {
+function simularMapeo(ejecutable, config) {
   const duracion = 4000;
   const azar = aleatorio(7);
-  const perilla = new Perilla();
-  perilla.setRangoLeido(config.leidoMin, config.leidoMax);
-  perilla.setRangoMapeado(config.mapeadoMin, config.mapeadoMax);
-
   const giro = (t) => {
     const suave = (x) => 0.5 - 0.5 * Math.cos(Math.PI * Math.min(Math.max(x, 0), 1));
     if (t < 2000) return suave((t - 200) / 1600);
@@ -170,21 +157,19 @@ function simularMapeo(config) {
   };
 
   const entrada = [];
-  const salida = [];
   for (let t = 0; t <= duracion; t += 10) {
     const ideal = config.leidoMin + giro(t) * (config.leidoMax - config.leidoMin);
-    const lectura = Math.round(Math.min(Math.max(ideal + (azar() - 0.5) * 12, config.leidoMin), config.leidoMax));
-    perilla.leer(lectura);
-    entrada.push([t, perilla.getValor()]);
-    salida.push([t, perilla.getValorMapeado()]);
+    entrada.push([t, Math.round(Math.min(Math.max(ideal + (azar() - 0.5) * 12, config.leidoMin), config.leidoMax))]);
   }
+  const rangos = [config.leidoMin, config.leidoMax, config.mapeadoMin, config.mapeadoMax].map(String);
+  const filas = correrSimulador(ejecutable, rangos, entrada);
   const marcas = (min, max) => [[min, String(min)], [(min + max) / 2, String(Math.round((min + max) / 2))], [max, String(max)]];
   return {
     subtitulo: `mapeo: leer() cada 10 ms, de ${config.leidoMin}-${config.leidoMax} a ${config.mapeadoMin}-${config.mapeadoMax}`,
     ejeX: { min: 0, max: duracion, paso: 500, unidad: 'ms' },
     paneles: [
-      { titulo: 'getValor(): lectura de la patita', serie: entrada, min: config.leidoMin, max: config.leidoMax, marcas: marcas(config.leidoMin, config.leidoMax), color: 'pink' },
-      { titulo: 'getValorMapeado()', serie: salida, min: config.mapeadoMin, max: config.mapeadoMax, marcas: marcas(config.mapeadoMin, config.mapeadoMax), color: 'greenyellow' },
+      { titulo: 'getValor(): lectura de la patita', serie: filas.map(([t, l]) => [t, l]), min: config.leidoMin, max: config.leidoMax, marcas: marcas(config.leidoMin, config.leidoMax), color: 'pink' },
+      { titulo: 'getValorMapeado()', serie: filas.map(([t, , m]) => [t, m]), min: config.mapeadoMin, max: config.mapeadoMax, marcas: marcas(config.mapeadoMin, config.mapeadoMax), color: 'greenyellow' },
     ],
   };
 }
@@ -267,19 +252,38 @@ function buscarFuentes() {
     });
 }
 
-function main() {
+async function main() {
   const fuentes = buscarFuentes();
-  fuentes.forEach((rutaYaml) => {
+  let fallidos = 0;
+  for (const rutaYaml of fuentes) {
     const config = leerConfiguracion(rutaYaml);
     const simular = GRAFICOS[config.tipo];
     if (!simular) throw new Error(`${rutaYaml}: tipo desconocido "${config.tipo}"`);
     const carpetaSvg = path.join(path.dirname(rutaYaml), '..', 'svg');
     const rutaSvg = path.join(carpetaSvg, `${path.basename(rutaYaml).replace(/\.ya?ml$/, '')}.svg`);
-    fs.mkdirSync(carpetaSvg, { recursive: true });
-    fs.writeFileSync(rutaSvg, dibujarGrafico(config, simular(config)), 'utf8');
-    console.log(`  ${path.relative(RAIZ, rutaSvg)}`);
-  });
-  console.log(`\nListo: ${fuentes.length} gráficos.`);
+
+    const carpetaTemporal = fs.mkdtempSync(path.join(os.tmpdir(), 'grafico-'));
+    try {
+      const version = config.version || (await ultimaVersion(config.repositorio));
+      const ejecutable = compilarSimulador(config.repositorio, version, config.tipo, carpetaTemporal);
+      const grafico = simular(ejecutable, config);
+      fs.mkdirSync(carpetaSvg, { recursive: true });
+      fs.writeFileSync(rutaSvg, dibujarGrafico({ ...config, titulo: `${config.repositorio} ${version}` }, grafico), 'utf8');
+      console.log(`  ${path.relative(RAIZ, rutaSvg)} (${config.repositorio} ${version})`);
+    } catch (error) {
+      fallidos++;
+      const detalle = (error.stderr ? error.stderr.toString() : error.message).trim();
+      // ::warning:: aparece como aviso en el resumen del GitHub Action
+      console.log(`::warning::${path.relative(RAIZ, rutaYaml)}: no se pudo generar, queda el svg anterior. ${detalle.split('\n')[0]}`);
+      console.error(detalle);
+    } finally {
+      fs.rmSync(carpetaTemporal, { recursive: true, force: true });
+    }
+  }
+  console.log(`\nListo: ${fuentes.length - fallidos} de ${fuentes.length} gráficos.`);
 }
 
-main();
+main().catch((error) => {
+  console.error(error);
+  process.exit(1);
+});

@@ -2,6 +2,10 @@ name: Generar árboles, gráficos, previews webp y redes sociales
 
 on:
   workflow_dispatch: {}
+  # una vez al día, para redibujar árboles y gráficos cuando cambian
+  # los repositorios de las bibliotecas o sale una versión nueva
+  schedule:
+    - cron: "17 9 * * *"
   push:
     branches: [main]
     paths:
@@ -13,6 +17,7 @@ on:
       - "scripts/generar-arboles.js"
       - "**/grafico/*.yaml"
       - "scripts/generar-graficos.js"
+      - "scripts/simuladores/*.cpp"
       - "scripts/generar-webp.sh"
       - "scripts/generar-redes-sociales.sh"
 
@@ -36,7 +41,9 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
         run: node scripts/generar-arboles.js
 
-      - name: Generar gráficos (svg/*.svg) desde grafico/*.yaml
+      - name: Generar gráficos (svg/*.svg) desde grafico/*.yaml, compilando cada biblioteca
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
         run: node scripts/generar-graficos.js
 
       - name: Instalar cwebp, rsvg-convert e ImageMagick

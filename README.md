@@ -52,12 +52,12 @@ node scripts/generar-arboles.js
 
 ### Gráficos
 
-Un gráfico de lo que hace la biblioteca: [`scripts/generar-graficos.js`](scripts/generar-graficos.js) corre la lógica de la biblioteca (portada a JS línea por línea desde su `src/*.cpp`) sobre una entrada simulada, y dibuja arriba la entrada y abajo lo que entrega la biblioteca. Cada `grafico/<nombre>.yaml` es plano (`clave: valor`) y su `tipo` elige el gráfico:
+Un gráfico de lo que hace la biblioteca: [`scripts/generar-graficos.js`](scripts/generar-graficos.js) clona la última versión publicada (release) del repositorio, compila sus `src/*.cpp` de verdad junto a un simulador de [`scripts/simuladores/`](scripts/simuladores/) que implementa su `src/Hardware.h` con una patita simulada, lo corre sobre una entrada simulada, y dibuja arriba la entrada y abajo lo que entrega la biblioteca. No hay copia de la biblioteca en JS: el gráfico muestra lo que hace la versión publicada, y el título dice cuál es. Cada `grafico/<nombre>.yaml` es plano (`clave: valor`), con `repositorio`, `tipo` y, si se quiere fijar una versión en vez de la última release, `version`. El `tipo` elige el gráfico y el simulador:
 
 - `antirrebote` (Boton): un botón con rebotes, y lo que entrega `getValor()`.
 - `mapeo` (Perilla): una perilla girando, y lo que entrega `getValorMapeado()`.
 
-El port es una copia: si cambia el `.cpp` de la biblioteca, hay que actualizarlo en el script.
+El workflow corre también una vez al día, así que al publicar una release nueva de la biblioteca el gráfico se redibuja solo (o al tiro, corriendo el workflow a mano). Si una versión no compila con el simulador, por ejemplo una release antigua sin `src/Hardware.h`, queda el svg anterior y el workflow lo avisa. Para correrlo localmente hace falta `git` y un compilador de C++:
 
 ```sh
 node scripts/generar-graficos.js

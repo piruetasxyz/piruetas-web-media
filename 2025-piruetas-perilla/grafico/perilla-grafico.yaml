@@ -1,7 +1,9 @@
-# scripts/generar-graficos.js corre la lógica de Perilla (src/Perilla.cpp)
-# sobre una perilla simulada y dibuja ../svg/perilla-grafico.svg
+# scripts/generar-graficos.js compila src/*.cpp de la última versión
+# publicada (release) de este repositorio junto a
+# scripts/simuladores/mapeo.cpp, lo corre sobre una perilla simulada y
+# dibuja ../svg/perilla-grafico.svg
+repositorio: 'piruetasxyz/Perilla'
 tipo: 'mapeo'
-titulo: 'piruetasxyz/Perilla'
 # como en el ejemplo del README: setRangoLeido(0, 1023) y setRangoMapeado(0, 100)
 leidoMin: 0
 leidoMax: 1023
