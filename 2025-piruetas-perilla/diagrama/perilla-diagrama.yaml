@@ -1,0 +1,41 @@
+# Fuente del diagrama de flujo de señal de la biblioteca Perilla
+# (https://github.com/piruetasxyz/Perilla). scripts/generar-diagramas.js
+# lo dibuja en ../svg/perilla-diagrama.svg, con el mismo lenguaje visual
+# que los esquemáticos de KiCad (ej. 2026-piruetas-chufe).
+titulo: 'perilla'
+archivo: 'src/Perilla.h'
+revision: 'v0.1.0'
+fecha: '2026-10-06'
+
+# de izquierda a derecha
+entrada:
+  tipo: 'potenciometro'
+  ref: 'RV1'
+  valor: 'perilla'
+  alimentacion: '+5V'
+
+etapas:
+  - ref: 'U1'
+    nombre: 'Perilla(A0)'
+    notas:
+      - 'entrada'
+      - 'análoga'
+    cable: 'patita A0'
+  - ref: 'U2'
+    nombre: 'leer()'
+    notas:
+      - 'lee y mapea'
+      - '0-1023 → 0-100'
+    cable: 'lectura'
+    # entran por arriba del bloque, como parámetros
+    controles:
+      - 'setRangoLeido(0, 1023)'
+      - 'setRangoMapeado(0, 100)'
+  - ref: 'U3'
+    nombre: 'getValorMapeado()'
+    notas:
+      - 'valor en el'
+      - 'rango mapeado'
+    cable: 'valor'
+
+salida: '0-100'

@@ -18,16 +18,30 @@ Dentro de cada carpeta de proyecto, las imágenes se organizan en subcarpetas:
 2026-biblioteca-cuir-web/
   jpg/    fotos originales (portada-foto-actividad.jpg, ...)
   svg/    dibujos originales, si hay (esquemáticos, placas, ...)
+  diagrama/  fuentes .yaml de diagramas de bibliotecas de software, si hay
   mp4/    videos, si hay (renders 3D, ...)
   webp/   previews en formato webp, generadas automáticamente a partir de jpg/
   redes/  previews de 1200×628 para redes sociales, generadas automáticamente a partir de jpg/, png/ y svg/
 ```
 
-Solo `jpg/`, `png/`, `svg/` y `mp4/` se suben a mano; `webp/` y `redes/` no se editan nunca a mano.
+Solo `jpg/`, `png/`, `svg/`, `mp4/` y `diagrama/` se suben a mano; `webp/` y `redes/` no se editan nunca a mano, y tampoco los `svg/` que salen de un `diagrama/`.
 
 Los archivos nuevos dentro de `jpg/` se nombran de forma descriptiva, en minúsculas y con guiones, según lo que muestra la foto (ej: `portada-foto-actividad.jpg`, `inicio-objetos-coleccion.jpg`). Cada `.webp` en `webp/` tiene el mismo nombre que su `.jpg`.
 
 Algunas carpetas antiguas, como `2026-claudia-gonzalez-godoy-placas`, usan números de dos dígitos (`00.jpg`, `01.jpg`, ...).
+
+## Generación de diagramas de software
+
+Los proyectos de software (como las bibliotecas `2025-piruetas-boton` y `2025-piruetas-perilla`) no tienen esquemáticos de KiCad, así que su imagen es un diagrama de flujo de señal dibujado con código: cada `diagrama/<nombre>.yaml` describe la entrada física (botón, potenciómetro), los bloques (métodos de la biblioteca) y la salida, y [`scripts/generar-diagramas.js`](scripts/generar-diagramas.js) lo dibuja en `svg/<nombre>.svg`, imitando el estilo de los esquemáticos de KiCad (hoja, marco, colores y cuadro de título) y con el texto en Necto Mono convertido a trazados.
+
+Esto corre en el mismo GitHub Action [`generar-previews.yml`](.github/workflows/generar-previews.yml), antes de los previews, así que cada diagrama también recibe su `redes/<nombre>.jpg`.
+
+Para correrlo a mano desde la raíz del repositorio:
+
+```sh
+npm install
+node scripts/generar-diagramas.js
+```
 
 ## Generación de previews webp
 

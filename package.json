@@ -1,0 +1,12 @@
+{
+  "name": "piruetas-web-media",
+  "private": true,
+  "description": "Scripts que generan imágenes de piruetas-web-media",
+  "scripts": {
+    "generar-diagramas": "node scripts/generar-diagramas.js"
+  },
+  "dependencies": {
+    "js-yaml": "^4.1.0",
+    "opentype.js": "^1.3.4"
+  }
+}
