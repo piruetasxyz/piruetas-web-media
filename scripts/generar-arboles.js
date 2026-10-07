@@ -51,10 +51,12 @@ const LEYENDA = [
   ['configuracion', 'configuración'],
 ];
 
+const EXTENSIONES_MEDIOS = /\.(gif|png|jpe?g|webp|svg|mp4|mov)$/i;
+
 function tipoDeArchivo(ruta) {
   const nombre = path.basename(ruta);
-  if (ruta.startsWith('examples/') || /^pico\/ej[^/]+\//.test(ruta)) return 'ejemplo';
-  if (/\.(h|hpp|c|cpp|ino)$/.test(nombre)) return 'codigo';
+  if (/^(examples|ejemplos)\//.test(ruta) || /^pico\/ej[^/]+\//.test(ruta)) return 'ejemplo';
+  if (/\.(h|hpp|c|cpp|ino|py)$/.test(nombre)) return 'codigo';
   if (nombre === 'CMakeLists.txt') return 'configuracion';
   if (/\.(md|dox|txt|html)$/.test(nombre) || nombre === 'LICENSE') return 'texto';
   return 'configuracion';
@@ -75,7 +77,9 @@ async function pedirArbol(repositorio) {
   if (!respuesta.ok) throw new Error(`${repositorio}: la API de GitHub respondió ${respuesta.status}`);
   const datos = await respuesta.json();
   if (datos.truncated) console.warn(`  ${repositorio}: árbol truncado por la API, faltan archivos`);
-  return datos.tree.filter((n) => n.type === 'blob');
+  // sin imágenes ni videos (como el gif del README de kicad-visor): pesan
+  // tanto que tapan al código, y el árbol es un retrato del código
+  return datos.tree.filter((n) => n.type === 'blob' && !EXTENSIONES_MEDIOS.test(n.path));
 }
 
 /* Arma el árbol de carpetas a partir de la lista plana de archivos;

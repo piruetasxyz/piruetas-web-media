@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- generado por scripts/generar-arboles.js desde github.com/piruetasxyz/kicad-retrata, no editar a mano -->
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+<title>piruetasxyz/kicad-retrata: estructura de archivos</title>
+<rect width="1200" height="800" fill="white" />
+<g font-family="'Necto Mono', ui-monospace, Menlo, monospace" fill="black">
+<text x="24" y="48" font-size="26">piruetasxyz/kicad-retrata</text>
+<text x="24" y="70" font-size="14">estructura de archivos: el área de cada caja es el tamaño del archivo</text>
+<text x="1063.16" y="48" font-size="14">configuración</text>
+<rect x="1039.16" y="36" width="16" height="16" fill="greenyellow" stroke="black" stroke-width="1.5" />
+<text x="975.76" y="48" font-size="14">texto</text>
+<rect x="951.76" y="36" width="16" height="16" fill="pink" stroke="black" stroke-width="1.5" />
+<text x="862.32" y="48" font-size="14">ejemplos</text>
+<rect x="838.32" y="36" width="16" height="16" fill="skyblue" stroke="black" stroke-width="1.5" />
+<text x="766.24" y="48" font-size="14">código</text>
+<rect x="742.24" y="36" width="16" height="16" fill="orange" stroke="black" stroke-width="1.5" />
+</g>
+<g font-family="'Necto Mono', ui-monospace, Menlo, monospace">
+<rect x="24" y="88" width="394.31" height="688" fill="orange" stroke="black" stroke-width="1.5"><title>retrata.py</title></rect>
+<text x="28" y="104" font-size="15">retrata.py</text>
+<rect x="418.31" y="88" width="436.74" height="361.98" fill="pink" stroke="black" stroke-width="1.5"><title>README.md</title></rect>
+<text x="422.31" y="104" font-size="15">README.md</text>
+<rect x="418.31" y="449.98" width="436.74" height="326.02" fill="white" stroke="black" stroke-width="1.5" />
+<text x="422.31" y="464.98" font-size="12">pruebas/</text>
+<rect x="424.31" y="471.98" width="379.34" height="298.02" fill="white" stroke="black" stroke-width="1.5" />
+<text x="428.31" y="486.98" font-size="12">proyecto-minimo/</text>
+<rect x="430.31" y="493.98" width="324.48" height="270.02" fill="greenyellow" stroke="black" stroke-width="1.5"><title>pruebas/proyecto-minimo/proyecto-minimo.kicad_sch</title></rect>
+<text x="434.31" y="509.98" font-size="15">proyecto-minimo.kicad_sch</text>
+<rect x="754.78" y="493.98" width="42.87" height="270.02" fill="greenyellow" stroke="black" stroke-width="1.5"><title>pruebas/proyecto-minimo/proyecto-minimo.kicad_pcb</title></rect>
+<rect x="803.65" y="471.98" width="45.39" height="161.17" fill="white" stroke="black" stroke-width="1.5" />
+<text x="807.65" y="486.98" font-size="12">docs/</text>
+<rect x="809.65" y="493.98" width="33.39" height="133.17" fill="pink" stroke="black" stroke-width="1.5"><title>pruebas/docs/proyecto-minimo.md</title></rect>
+<rect x="803.65" y="633.15" width="45.39" height="136.85" fill="greenyellow" stroke="black" stroke-width="1.5"><title>pruebas/kicad-retrata.yml</title></rect>
+<rect x="855.04" y="88" width="320.96" height="302.78" fill="greenyellow" stroke="black" stroke-width="1.5"><title>action.yml</title></rect>
+<text x="859.04" y="104" font-size="15">action.yml</text>
+<rect x="855.04" y="390.78" width="162.68" height="308.03" fill="white" stroke="black" stroke-width="1.5" />
+<text x="859.04" y="405.78" font-size="12">ejemplos/</text>
+<rect x="861.04" y="412.78" width="150.68" height="176.52" fill="skyblue" stroke="black" stroke-width="1.5"><title>ejemplos/kicad-retrata.yml</title></rect>
+<text x="865.04" y="426.38" font-size="12">kicad-retrata.yml</text>
+<rect x="861.04" y="589.3" width="150.68" height="103.51" fill="skyblue" stroke="black" stroke-width="1.5"><title>ejemplos/retratar.yml</title></rect>
+<text x="865.04" y="605.3" font-size="15">retratar.yml</text>
+<rect x="1017.72" y="390.78" width="158.28" height="308.03" fill="white" stroke="black" stroke-width="1.5" />
+<text x="1021.72" y="405.78" font-size="12">.github/</text>
+<rect x="1023.72" y="412.78" width="146.28" height="280.03" fill="white" stroke="black" stroke-width="1.5" />
+<text x="1027.72" y="427.78" font-size="12">workflows/</text>
+<rect x="1029.72" y="434.78" width="134.28" height="138.51" fill="greenyellow" stroke="black" stroke-width="1.5"><title>.github/workflows/mover-etiqueta-mayor.yml</title></rect>
+<rect x="1029.72" y="573.29" width="134.28" height="113.52" fill="greenyellow" stroke="black" stroke-width="1.5"><title>.github/workflows/probar.yml</title></rect>
+<text x="1033.72" y="589.29" font-size="15">probar.yml</text>
+<rect x="855.04" y="698.8" width="306.02" height="77.2" fill="pink" stroke="black" stroke-width="1.5"><title>LICENSE</title></rect>
+<text x="859.04" y="714.8" font-size="15">LICENSE</text>
+<rect x="1161.06" y="698.8" width="14.94" height="62.35" fill="greenyellow" stroke="black" stroke-width="1.5"><title>.gitignore</title></rect>
+<rect x="1161.06" y="761.15" width="14.94" height="14.85" fill="pink" stroke="black" stroke-width="1.5"><title>requirements.txt</title></rect>
+</g>
+</svg>

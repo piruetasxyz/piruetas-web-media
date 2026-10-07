@@ -33,16 +33,18 @@ Algunas carpetas antiguas, como `2026-claudia-gonzalez-godoy-placas`, usan núme
 
 ## Imágenes de proyectos de software
 
-Los proyectos de software (como las bibliotecas `2025-piruetas-boton` y `2025-piruetas-perilla`) no tienen fotos ni esquemáticos, así que sus imágenes salen del código mismo, con dos scripts sin dependencias (solo Node 20) que corren en el GitHub Action [`generar-previews.yml`](.github/workflows/generar-previews.yml) antes de los previews, así que cada imagen también recibe su `redes/<nombre>.jpg`.
+Los proyectos de software (como las bibliotecas `2025-piruetas-boton`, `2025-piruetas-perilla`, `2026-piruetas-kicad-visor` y `2026-piruetas-kicad-retrata`) no tienen fotos ni esquemáticos, así que sus imágenes salen del código mismo, con dos scripts sin dependencias (solo Node 20) que corren en el GitHub Action [`generar-previews.yml`](.github/workflows/generar-previews.yml) antes de los previews, así que cada imagen también recibe su `redes/<nombre>.jpg`.
 
 ### Árboles
 
 Un treemap de la estructura de archivos de su repositorio. Cada archivo es un rectángulo con área proporcional a su tamaño, cada carpeta un marco que agrupa a sus archivos, y el color dice el tipo de archivo, con los colores del sitio (con leyenda y nombres en la imagen):
 
-- naranjo: código (`.h`, `.cpp`, ...)
-- celeste: ejemplos (`examples/`, `pico/ej*/`)
+- naranjo: código (`.h`, `.cpp`, `.py`, ...)
+- celeste: ejemplos (`examples/`, `ejemplos/`, `pico/ej*/`)
 - rosado: texto (`.md`, `LICENSE`, documentación)
 - verde limón: configuración (workflows, CMake, `library.properties`, ...)
+
+Las imágenes y los videos del repositorio (por ejemplo, el gif del README de kicad-visor) no se dibujan: pesan tanto que taparían al código.
 
 Cada `arbol/<nombre>.yaml` tiene una sola línea, `repositorio: 'piruetasxyz/Boton'`, y [`scripts/generar-arboles.js`](scripts/generar-arboles.js) dibuja `svg/<nombre>.svg` pidiendo el árbol del repositorio a la API de GitHub. Como el dibujo cambia cuando cambia el repositorio, para actualizarlo se puede correr el workflow a mano (workflow_dispatch) o desde la raíz del repositorio:
 
