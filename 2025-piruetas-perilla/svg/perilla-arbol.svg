@@ -16,71 +16,86 @@
 <rect x="742.24" y="36" width="16" height="16" fill="orange" stroke="black" stroke-width="1.5" />
 </g>
 <g font-family="'Necto Mono', ui-monospace, Menlo, monospace">
-<rect x="24" y="88" width="369.72" height="688" fill="white" stroke="black" stroke-width="1.5" />
-<text x="28" y="103" font-size="12">pico/</text>
-<rect x="30" y="110" width="357.72" height="314.74" fill="greenyellow" stroke="black" stroke-width="1.5"><title>pico/pico_sdk_import.cmake</title></rect>
-<text x="34" y="126" font-size="15">pico_sdk_import.cmake</text>
-<rect x="30" y="424.74" width="161.48" height="220.45" fill="greenyellow" stroke="black" stroke-width="1.5"><title>pico/CMakeLists.txt</title></rect>
-<text x="34" y="440.74" font-size="15">CMakeLists.txt</text>
-<rect x="30" y="645.19" width="161.48" height="124.81" fill="white" stroke="black" stroke-width="1.5" />
-<text x="34" y="660.19" font-size="12">ej01_brilloLed/</text>
-<rect x="36" y="667.19" width="149.48" height="96.81" fill="skyblue" stroke="black" stroke-width="1.5"><title>pico/ej01_brilloLed/main.cpp</title></rect>
-<text x="40" y="683.19" font-size="15">main.cpp</text>
-<rect x="191.48" y="424.74" width="196.24" height="102.7" fill="white" stroke="black" stroke-width="1.5" />
-<text x="195.48" y="439.74" font-size="12">ej02_umbral/</text>
-<rect x="197.48" y="446.74" width="184.24" height="74.7" fill="skyblue" stroke="black" stroke-width="1.5"><title>pico/ej02_umbral/main.cpp</title></rect>
-<text x="201.48" y="462.74" font-size="15">main.cpp</text>
-<rect x="191.48" y="527.44" width="101.91" height="182.54" fill="white" stroke="black" stroke-width="1.5" />
-<rect x="197.48" y="533.44" width="89.91" height="170.54" fill="skyblue" stroke="black" stroke-width="1.5"><title>pico/ej03_dosPerillas/main.cpp</title></rect>
-<text x="201.48" y="549.44" font-size="15">main.cpp</text>
-<rect x="293.39" y="527.44" width="94.33" height="182.54" fill="white" stroke="black" stroke-width="1.5" />
-<rect x="299.39" y="533.44" width="82.33" height="170.54" fill="skyblue" stroke="black" stroke-width="1.5"><title>pico/ej00_leerPerilla/main.cpp</title></rect>
-<text x="303.39" y="547.04" font-size="12">main.cpp</text>
-<rect x="191.48" y="709.98" width="196.24" height="60.02" fill="orange" stroke="black" stroke-width="1.5"><title>pico/PicoHardware.cpp</title></rect>
-<text x="195.48" y="725.98" font-size="15">PicoHardware.cpp</text>
-<rect x="393.72" y="88" width="360.59" height="382.71" fill="white" stroke="black" stroke-width="1.5" />
-<text x="397.72" y="103" font-size="12">src/</text>
-<rect x="399.72" y="110" width="348.59" height="188.05" fill="orange" stroke="black" stroke-width="1.5"><title>src/Perilla.h</title></rect>
-<text x="403.72" y="126" font-size="15">Perilla.h</text>
-<rect x="399.72" y="298.05" width="167.85" height="166.66" fill="orange" stroke="black" stroke-width="1.5"><title>src/Perilla.cpp</title></rect>
-<text x="403.72" y="314.05" font-size="15">Perilla.cpp</text>
-<rect x="567.57" y="298.05" width="146.19" height="166.66" fill="orange" stroke="black" stroke-width="1.5"><title>src/Hardware.h</title></rect>
-<text x="571.57" y="314.05" font-size="15">Hardware.h</text>
-<rect x="713.76" y="298.05" width="34.54" height="166.66" fill="white" stroke="black" stroke-width="1.5" />
-<rect x="719.76" y="304.05" width="22.54" height="154.66" fill="orange" stroke="black" stroke-width="1.5"><title>src/arduino/ArduinoHardware.cpp</title></rect>
-<rect x="393.72" y="470.71" width="360.59" height="305.29" fill="pink" stroke="black" stroke-width="1.5"><title>README.md</title></rect>
-<text x="397.72" y="486.71" font-size="15">README.md</text>
-<rect x="754.31" y="88" width="421.69" height="211.61" fill="white" stroke="black" stroke-width="1.5" />
-<text x="758.31" y="103" font-size="12">.github/</text>
-<rect x="760.31" y="110" width="409.69" height="183.61" fill="white" stroke="black" stroke-width="1.5" />
-<text x="764.31" y="125" font-size="12">workflows/</text>
-<rect x="766.31" y="132" width="218.42" height="155.61" fill="greenyellow" stroke="black" stroke-width="1.5"><title>.github/workflows/doxygen.yml</title></rect>
-<text x="770.31" y="148" font-size="15">doxygen.yml</text>
-<rect x="984.73" y="132" width="83.58" height="155.61" fill="greenyellow" stroke="black" stroke-width="1.5"><title>.github/workflows/pico-compile.yml</title></rect>
-<rect x="1068.3" y="132" width="95.7" height="118.83" fill="greenyellow" stroke="black" stroke-width="1.5"><title>.github/workflows/arduino-compile-sketches.yml</title></rect>
-<rect x="1068.3" y="250.83" width="95.7" height="36.79" fill="greenyellow" stroke="black" stroke-width="1.5"><title>.github/workflows/arduino-lint.yml</title></rect>
-<rect x="754.31" y="299.61" width="222.34" height="362.75" fill="white" stroke="black" stroke-width="1.5" />
-<text x="758.31" y="314.61" font-size="12">docs/</text>
-<rect x="760.31" y="321.61" width="210.34" height="280.16" fill="pink" stroke="black" stroke-width="1.5"><title>docs/principal.dox</title></rect>
-<text x="764.31" y="337.61" font-size="15">principal.dox</text>
-<rect x="760.31" y="601.77" width="210.34" height="54.59" fill="pink" stroke="black" stroke-width="1.5"><title>docs/index.html</title></rect>
-<text x="764.31" y="617.77" font-size="15">index.html</text>
-<rect x="976.65" y="299.61" width="199.35" height="362.75" fill="white" stroke="black" stroke-width="1.5" />
-<text x="980.65" y="314.61" font-size="12">examples/</text>
-<rect x="982.65" y="321.61" width="97.24" height="176.23" fill="white" stroke="black" stroke-width="1.5" />
-<rect x="988.65" y="327.61" width="85.24" height="164.23" fill="skyblue" stroke="black" stroke-width="1.5"><title>examples/ej03_dosPerillas/ej03_dosPerillas.ino</title></rect>
-<rect x="1079.89" y="321.61" width="90.11" height="176.23" fill="white" stroke="black" stroke-width="1.5" />
-<rect x="1085.89" y="327.61" width="78.11" height="164.23" fill="skyblue" stroke="black" stroke-width="1.5"><title>examples/ej01_brilloLed/ej01_brilloLed.ino</title></rect>
-<rect x="982.65" y="497.84" width="99.74" height="158.52" fill="white" stroke="black" stroke-width="1.5" />
-<rect x="988.65" y="503.84" width="87.74" height="146.52" fill="skyblue" stroke="black" stroke-width="1.5"><title>examples/ej00_leerPerilla/ej00_leerPerilla.ino</title></rect>
-<rect x="1082.39" y="497.84" width="87.61" height="158.52" fill="white" stroke="black" stroke-width="1.5" />
-<rect x="1088.39" y="503.84" width="75.61" height="146.52" fill="skyblue" stroke="black" stroke-width="1.5"><title>examples/ej02_umbral/ej02_umbral.ino</title></rect>
-<rect x="754.31" y="662.36" width="188.78" height="113.64" fill="pink" stroke="black" stroke-width="1.5"><title>LICENSE</title></rect>
-<text x="758.31" y="678.36" font-size="15">LICENSE</text>
-<rect x="943.09" y="662.36" width="109.01" height="113.64" fill="greenyellow" stroke="black" stroke-width="1.5"><title>Doxyfile</title></rect>
-<text x="947.09" y="678.36" font-size="15">Doxyfile</text>
-<rect x="1052.1" y="662.36" width="63.63" height="113.64" fill="greenyellow" stroke="black" stroke-width="1.5"><title>library.properties</title></rect>
-<rect x="1115.73" y="662.36" width="60.27" height="102.61" fill="pink" stroke="black" stroke-width="1.5"><title>keywords.txt</title></rect>
-<rect x="1115.73" y="764.97" width="60.27" height="11.03" fill="greenyellow" stroke="black" stroke-width="1.5"><title>.gitignore</title></rect>
+<rect x="24" y="88" width="406.03" height="688" fill="white" stroke="black" stroke-width="1.5" />
+<text x="28" y="103" font-size="12">src/</text>
+<rect x="30" y="110" width="394.03" height="364.61" fill="orange" stroke="black" stroke-width="1.5"><title>src/Perilla.h</title></rect>
+<text x="34" y="126" font-size="15">Perilla.h</text>
+<rect x="30" y="474.61" width="292.1" height="295.39" fill="orange" stroke="black" stroke-width="1.5"><title>src/Perilla.cpp</title></rect>
+<text x="34" y="490.61" font-size="15">Perilla.cpp</text>
+<rect x="322.1" y="474.61" width="101.93" height="237.09" fill="orange" stroke="black" stroke-width="1.5"><title>src/Hardware.h</title></rect>
+<text x="326.1" y="490.61" font-size="15">Hardware.h</text>
+<rect x="322.1" y="711.7" width="101.93" height="58.3" fill="white" stroke="black" stroke-width="1.5" />
+<rect x="328.1" y="717.7" width="89.93" height="46.3" fill="orange" stroke="black" stroke-width="1.5"><title>src/arduino/ArduinoHardware.cpp</title></rect>
+<rect x="430.03" y="88" width="423.92" height="452.25" fill="white" stroke="black" stroke-width="1.5" />
+<text x="434.03" y="103" font-size="12">pico/</text>
+<rect x="436.03" y="110" width="310.65" height="220.3" fill="greenyellow" stroke="black" stroke-width="1.5"><title>pico/pico_sdk_import.cmake</title></rect>
+<text x="440.03" y="126" font-size="15">pico_sdk_import.cmake</text>
+<rect x="746.68" y="110" width="101.26" height="220.3" fill="greenyellow" stroke="black" stroke-width="1.5"><title>pico/CMakeLists.txt</title></rect>
+<text x="750.68" y="121.2" font-size="9">CMakeLists.txt</text>
+<rect x="436.03" y="330.3" width="134.74" height="110.32" fill="white" stroke="black" stroke-width="1.5" />
+<text x="440.03" y="345.3" font-size="12">ej05_encoder/</text>
+<rect x="442.03" y="352.3" width="122.74" height="82.32" fill="skyblue" stroke="black" stroke-width="1.5"><title>pico/ej05_encoder/main.cpp</title></rect>
+<text x="446.03" y="368.3" font-size="15">main.cpp</text>
+<rect x="436.03" y="440.62" width="134.74" height="93.62" fill="white" stroke="black" stroke-width="1.5" />
+<text x="440.03" y="455.62" font-size="12">ej04_filtro/</text>
+<rect x="442.03" y="462.62" width="122.74" height="65.62" fill="skyblue" stroke="black" stroke-width="1.5"><title>pico/ej04_filtro/main.cpp</title></rect>
+<text x="446.03" y="478.62" font-size="15">main.cpp</text>
+<rect x="570.77" y="330.3" width="120.14" height="101.97" fill="white" stroke="black" stroke-width="1.5" />
+<text x="574.77" y="345.3" font-size="12">ej01_brilloLed/</text>
+<rect x="576.77" y="352.3" width="108.14" height="73.97" fill="skyblue" stroke="black" stroke-width="1.5"><title>pico/ej01_brilloLed/main.cpp</title></rect>
+<text x="580.77" y="368.3" font-size="15">main.cpp</text>
+<rect x="570.77" y="432.27" width="120.14" height="101.97" fill="white" stroke="black" stroke-width="1.5" />
+<text x="574.77" y="447.27" font-size="12">ej02_umbral/</text>
+<rect x="576.77" y="454.27" width="108.14" height="73.97" fill="skyblue" stroke="black" stroke-width="1.5"><title>pico/ej02_umbral/main.cpp</title></rect>
+<text x="580.77" y="470.27" font-size="15">main.cpp</text>
+<rect x="690.91" y="330.3" width="81.55" height="138.66" fill="white" stroke="black" stroke-width="1.5" />
+<rect x="696.91" y="336.3" width="69.55" height="126.66" fill="skyblue" stroke="black" stroke-width="1.5"><title>pico/ej03_dosPerillas/main.cpp</title></rect>
+<text x="700.91" y="349.9" font-size="12">main.cpp</text>
+<rect x="772.46" y="330.3" width="75.48" height="138.66" fill="white" stroke="black" stroke-width="1.5" />
+<rect x="778.46" y="336.3" width="63.48" height="126.66" fill="skyblue" stroke="black" stroke-width="1.5"><title>pico/ej00_leerPerilla/main.cpp</title></rect>
+<text x="782.46" y="347.5" font-size="9">main.cpp</text>
+<rect x="690.91" y="468.97" width="157.03" height="65.28" fill="orange" stroke="black" stroke-width="1.5"><title>pico/PicoHardware.cpp</title></rect>
+<text x="694.91" y="484.97" font-size="15">PicoHardware.cpp</text>
+<rect x="430.03" y="540.25" width="423.92" height="235.75" fill="pink" stroke="black" stroke-width="1.5"><title>README.md</title></rect>
+<text x="434.03" y="556.25" font-size="15">README.md</text>
+<rect x="853.95" y="88" width="322.05" height="226.55" fill="white" stroke="black" stroke-width="1.5" />
+<text x="857.95" y="103" font-size="12">examples/</text>
+<rect x="859.95" y="110" width="119.85" height="108.93" fill="white" stroke="black" stroke-width="1.5" />
+<text x="863.95" y="125" font-size="12">ej05_encoder/</text>
+<rect x="865.95" y="132" width="107.85" height="80.93" fill="skyblue" stroke="black" stroke-width="1.5"><title>examples/ej05_encoder/ej05_encoder.ino</title></rect>
+<text x="869.95" y="143.2" font-size="9">ej05_encoder.ino</text>
+<rect x="859.95" y="218.93" width="119.85" height="89.62" fill="white" stroke="black" stroke-width="1.5" />
+<text x="863.95" y="233.93" font-size="12">ej04_filtro/</text>
+<rect x="865.95" y="240.93" width="107.85" height="61.62" fill="skyblue" stroke="black" stroke-width="1.5"><title>examples/ej04_filtro/ej04_filtro.ino</title></rect>
+<text x="869.95" y="252.13" font-size="9">ej04_filtro.ino</text>
+<rect x="979.79" y="110" width="98.73" height="104.53" fill="white" stroke="black" stroke-width="1.5" />
+<rect x="985.79" y="116" width="86.73" height="92.53" fill="skyblue" stroke="black" stroke-width="1.5"><title>examples/ej03_dosPerillas/ej03_dosPerillas.ino</title></rect>
+<rect x="1078.52" y="110" width="91.48" height="104.53" fill="white" stroke="black" stroke-width="1.5" />
+<rect x="1084.52" y="116" width="79.48" height="92.53" fill="skyblue" stroke="black" stroke-width="1.5"><title>examples/ej01_brilloLed/ej01_brilloLed.ino</title></rect>
+<rect x="979.79" y="214.53" width="101.26" height="94.02" fill="white" stroke="black" stroke-width="1.5" />
+<rect x="985.79" y="220.53" width="89.26" height="82.02" fill="skyblue" stroke="black" stroke-width="1.5"><title>examples/ej00_leerPerilla/ej00_leerPerilla.ino</title></rect>
+<rect x="1081.05" y="214.53" width="88.95" height="94.02" fill="white" stroke="black" stroke-width="1.5" />
+<rect x="1087.05" y="220.53" width="76.95" height="82.02" fill="skyblue" stroke="black" stroke-width="1.5"><title>examples/ej02_umbral/ej02_umbral.ino</title></rect>
+<rect x="853.95" y="314.55" width="322.05" height="182.84" fill="white" stroke="black" stroke-width="1.5" />
+<text x="857.95" y="329.55" font-size="12">docs/</text>
+<rect x="859.95" y="336.55" width="267.19" height="154.84" fill="pink" stroke="black" stroke-width="1.5"><title>docs/principal.dox</title></rect>
+<text x="863.95" y="352.55" font-size="15">principal.dox</text>
+<rect x="1127.13" y="336.55" width="42.87" height="154.84" fill="pink" stroke="black" stroke-width="1.5"><title>docs/index.html</title></rect>
+<rect x="853.95" y="497.39" width="198.24" height="278.61" fill="white" stroke="black" stroke-width="1.5" />
+<text x="857.95" y="512.39" font-size="12">.github/</text>
+<rect x="859.95" y="519.39" width="186.24" height="250.61" fill="white" stroke="black" stroke-width="1.5" />
+<text x="863.95" y="534.39" font-size="12">workflows/</text>
+<rect x="865.95" y="541.39" width="174.24" height="122.26" fill="greenyellow" stroke="black" stroke-width="1.5"><title>.github/workflows/doxygen.yml</title></rect>
+<text x="869.95" y="557.39" font-size="15">doxygen.yml</text>
+<rect x="865.95" y="663.65" width="81.23" height="100.35" fill="greenyellow" stroke="black" stroke-width="1.5"><title>.github/workflows/pico-compile.yml</title></rect>
+<rect x="947.17" y="663.65" width="93.01" height="76.63" fill="greenyellow" stroke="black" stroke-width="1.5"><title>.github/workflows/arduino-compile-sketches.yml</title></rect>
+<rect x="947.17" y="740.28" width="93.01" height="23.72" fill="greenyellow" stroke="black" stroke-width="1.5"><title>.github/workflows/arduino-lint.yml</title></rect>
+<rect x="1052.18" y="497.39" width="123.82" height="107.24" fill="pink" stroke="black" stroke-width="1.5"><title>LICENSE</title></rect>
+<text x="1056.18" y="513.39" font-size="15">LICENSE</text>
+<rect x="1052.18" y="604.62" width="123.82" height="61.93" fill="greenyellow" stroke="black" stroke-width="1.5"><title>Doxyfile</title></rect>
+<text x="1056.18" y="620.62" font-size="15">Doxyfile</text>
+<rect x="1052.18" y="666.55" width="66.98" height="109.45" fill="pink" stroke="black" stroke-width="1.5"><title>keywords.txt</title></rect>
+<rect x="1119.16" y="666.55" width="56.84" height="102.21" fill="greenyellow" stroke="black" stroke-width="1.5"><title>library.properties</title></rect>
+<rect x="1119.16" y="768.76" width="56.84" height="7.24" fill="greenyellow" stroke="black" stroke-width="1.5"><title>.gitignore</title></rect>
 </g>
 </svg>
