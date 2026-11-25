@@ -2,6 +2,8 @@
 
 Repositorio de imágenes para los proyectos web de piruetas.
 
+Los archivos se sirven con GitHub Pages en `https://piruetas.xyz/piruetas-web-media/<carpeta>/<subcarpeta>/<archivo>`. El archivo vacío `.nojekyll` evita que Pages procese el repositorio con Jekyll. No se usa jsDelivr porque su espejo de GitHub no sirve repositorios de más de 50 MB.
+
 ## Estructura de carpetas
 
 Cada proyecto vive en su propia carpeta en la raíz del repositorio, con el nombre:
